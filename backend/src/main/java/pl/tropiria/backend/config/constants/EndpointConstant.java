@@ -13,4 +13,6 @@ public  class EndpointConstant {
 
     public static final String ANIMALS = "/animals";
 
+    public static final String ANIMALS_FOR_SALE = "/animals-for-sale";
+
 }
