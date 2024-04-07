@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.tropiria.backend.animal.forsale.AnimalForSale;
-import pl.tropiria.backend.color.Color;
-import pl.tropiria.backend.color.ColorService;
+import pl.tropiria.backend.morph.Morph;
+import pl.tropiria.backend.morph.MorphService;
 import pl.tropiria.backend.config.constants.ReservationConstant;
 import pl.tropiria.backend.photos.Photos;
 import pl.tropiria.backend.photos.PhotosService;
@@ -25,7 +25,7 @@ public class AnimalService {
     private final AnimalRepository animalRepository;
     private final PhotosService photosService;
     private final SpeciesService speciesService;
-    private final ColorService colorService;
+    private final MorphService morphService;
 
     private static AnimalDto animalDto;
 
@@ -49,13 +49,13 @@ public class AnimalService {
             Integer sex,
             String dateOfBirth,
             String speciesName,
-            List<String> colors,
+            List<String> morphs,
             MultipartFile[] photos,
             String name,
             Long price,
             String reservationStatus,
             List<String> parents) {
-        setAnimalDtoFields(name, description, sex, dateOfBirth, speciesName, colors);
+        setAnimalDtoFields(name, description, sex, dateOfBirth, speciesName, morphs);
         List<Photos> photosList = photosService.savePhoto(photos);
         animalDto.setPhotos(photosList);
         isAnimalForSale(reservationStatus, price, parents);
@@ -84,7 +84,7 @@ public class AnimalService {
         return animalRepository.findByName(name) != null;
     }
 
-    private void setAnimalDtoFields(String name, String description, Integer sex, String dateOfBirth, String speciesName, List<String> colors) {
+    private void setAnimalDtoFields(String name, String description, Integer sex, String dateOfBirth, String speciesName, List<String> morphs) {
 
 
         animalDto = new AnimalDto();
@@ -98,15 +98,15 @@ public class AnimalService {
             animalDto.setSpecies(speciesService.getSpeciesByName(speciesName));
         }
 
-        List<Color> colorList = new ArrayList<>();
-        for (String color : colors) {
-            if (!colorService.isColorExists(color)) {
-                throw new IllegalFormatCodePointException(COLOR_NOT_FOUND.getCode());
+        List<Morph> morphList = new ArrayList<>();
+        for (String morph : morphs) {
+            if (!morphService.isMorphExists(morph)) {
+                throw new IllegalFormatCodePointException(MORPH_NOT_FOUND.getCode());
             } else {
-                colorList.add(colorService.getColorByName(color));
+                morphList.add(morphService.getMorphByName(morph));
             }
         }
-        animalDto.setColors(colorList);
+        animalDto.setMorphs(morphList);
     }
 
     private void isAnimalForSale(String reservationStatus, Long price, List<String> parents) {

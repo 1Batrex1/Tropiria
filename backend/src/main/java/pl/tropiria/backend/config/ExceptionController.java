@@ -25,12 +25,11 @@ public class ExceptionController extends ResponseEntityExceptionHandler  {
         if (e.getCodePoint() == SPECIES_NOT_FOUND.getCode()) {
             return ResponseEntity.internalServerError().body(SPECIES_NOT_FOUND.getMessage());
         }
-
-        if (e.getCodePoint() == COLOR_ALREADY_EXISTS.getCode()) {
-            return ResponseEntity.internalServerError().body(COLOR_ALREADY_EXISTS.getMessage());
+        if (e.getCodePoint() == MORPH_ALREADY_EXISTS.getCode()) {
+            return ResponseEntity.internalServerError().body(MORPH_ALREADY_EXISTS.getMessage());
         }
-        if (e.getCodePoint() == COLOR_NOT_FOUND.getCode()) {
-            return ResponseEntity.internalServerError().body(COLOR_NOT_FOUND.getMessage());
+        if (e.getCodePoint() == MORPH_NOT_FOUND.getCode()) {
+            return ResponseEntity.internalServerError().body(MORPH_NOT_FOUND.getMessage());
         }
         if (e.getCodePoint() == PHOTO_ALREADY_EXISTS.getCode()) {
             return ResponseEntity.internalServerError().body(PHOTO_ALREADY_EXISTS.getMessage());
@@ -38,15 +37,28 @@ public class ExceptionController extends ResponseEntityExceptionHandler  {
         if (e.getCodePoint() == CORRUPTED_PHOTO_FILE.getCode()) {
             return ResponseEntity.internalServerError().body(CORRUPTED_PHOTO_FILE.getMessage());
         }
-        if (e.getCodePoint() == FILED_TO_SAVE_PHOTO_ON_DISK.getCode()) {
-            return ResponseEntity.internalServerError().body(FILED_TO_SAVE_PHOTO_ON_DISK.getMessage());
+        if (e.getCodePoint() == FAIL_TO_SAVE_PHOTO_ON_DISK.getCode()) {
+            return ResponseEntity.internalServerError().body(FAIL_TO_SAVE_PHOTO_ON_DISK.getMessage());
         }
         if (e.getCodePoint() == ANIMAL_NOT_FOUND.getCode()) {
             return ResponseEntity.internalServerError().body(ANIMAL_NOT_FOUND.getMessage());
         }
-        if (e.getCodePoint() == COLOR_NOT_FOUND.getCode()) {
-            return ResponseEntity.internalServerError().body(COLOR_NOT_FOUND.getMessage());
+        if (e.getCodePoint() == MORPH_NOT_FOUND.getCode()) {
+            return ResponseEntity.internalServerError().body(MORPH_NOT_FOUND.getMessage());
         }
+        if (e.getCodePoint() == FAIL_TO_SAVE_PHOTO_ON_DISK.getCode()) {
+            return ResponseEntity.internalServerError().body(FAIL_TO_SAVE_PHOTO_PATH_TO_DATABASE.getMessage());
+        }
+        if (e.getCodePoint() == INVALID_RESERVATION_STATUS.getCode()) {
+            return ResponseEntity.badRequest().body(INVALID_RESERVATION_STATUS.getMessage());
+        }
+        if (e.getCodePoint() == JSON_PARSE_ERROR.getCode()) {
+            return ResponseEntity.internalServerError().body(JSON_PARSE_ERROR.getMessage());
+        }
+        if (e.getCodePoint() == PARENTS_NOT_FOUND.getCode()) {
+            return ResponseEntity.internalServerError().body(PARENTS_NOT_FOUND.getMessage());
+        }
+
 
 
 

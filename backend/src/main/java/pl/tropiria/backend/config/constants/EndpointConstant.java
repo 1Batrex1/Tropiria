@@ -7,7 +7,7 @@ public  class EndpointConstant {
 
     public static final String SPECIES = "/species";
 
-    public static final String COLORS = "/colors";
+    public static final String MORPH = "/morph";
 
     public static final String PHOTOS = "/photos";
 

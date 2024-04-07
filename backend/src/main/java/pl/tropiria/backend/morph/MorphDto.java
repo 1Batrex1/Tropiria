@@ -1,14 +1,12 @@
-package pl.tropiria.backend.color;
+package pl.tropiria.backend.morph;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 
 @AllArgsConstructor
 @Data
-public class ColorDto {
+public class MorphDto {
     private long id;
     private String name;
 

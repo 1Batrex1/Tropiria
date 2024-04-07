@@ -1,15 +1,12 @@
 package pl.tropiria.backend.animal;
 
-import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Range;
 import pl.tropiria.backend.animal.forsale.AnimalForSale;
-import pl.tropiria.backend.color.Color;
+import pl.tropiria.backend.morph.Morph;
 import pl.tropiria.backend.photos.Photos;
 import pl.tropiria.backend.species.Species;
 
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -29,7 +26,7 @@ public class AnimalDto {
 
     private Species species;
 
-    private List<Color> colors;
+    private List<Morph> morphs;
 
     private List<Photos> photos;
 
@@ -39,12 +36,12 @@ public class AnimalDto {
                      Integer sex,
                      String dateOfBirth,
                      Species species,
-                     List<Color> colors) {
+                     List<Morph> morphs) {
         this.description = description;
         this.sex = sex;
         this.dateOfBirth = dateOfBirth;
         this.species = species;
-        this.colors = colors;
+        this.morphs = morphs;
 
     }
 

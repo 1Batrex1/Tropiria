@@ -5,11 +5,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
 import pl.tropiria.backend.animal.forsale.AnimalForSale;
-import pl.tropiria.backend.color.Color;
+import pl.tropiria.backend.morph.Morph;
 import pl.tropiria.backend.photos.Photos;
 import pl.tropiria.backend.species.Species;
 
-import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
@@ -37,7 +36,7 @@ public class Animal {
     private Species species;
 
     @ManyToMany
-    private List<Color> colors;
+    private List<Morph> morphs;
 
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Photos> photos;

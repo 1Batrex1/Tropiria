@@ -3,7 +3,6 @@ package pl.tropiria.backend.utilites;
 import pl.tropiria.backend.animal.Animal;
 import pl.tropiria.backend.animal.AnimalDto;
 
-import java.util.Date;
 import java.util.IllegalFormatCodePointException;
 
 import static pl.tropiria.backend.config.constants.ErrorsConstant.UTILITY_CLASS;
@@ -22,7 +21,7 @@ public class AnimalDtoMapper {
         animalDto.setSex(animal.getSex());
         animalDto.setDateOfBirth(animal.getDateOfBirth());
         animalDto.setSpecies(animal.getSpecies());
-        animalDto.setColors(animal.getColors());
+        animalDto.setMorphs(animal.getMorphs());
         animalDto.setPhotos(animal.getPhotos());
         animalDto.setAnimalForSale(animal.getAnimalForSale());
         return animalDto;
@@ -36,7 +35,7 @@ public class AnimalDtoMapper {
         animal.setSex(animalDto.getSex());
         animal.setDateOfBirth(animalDto.getDateOfBirth());
         animal.setSpecies(animalDto.getSpecies());
-        animal.setColors(animalDto.getColors());
+        animal.setMorphs(animalDto.getMorphs());
         animal.setPhotos(animalDto.getPhotos());
         animal.setAnimalForSale(animalDto.getAnimalForSale());
         return animal;

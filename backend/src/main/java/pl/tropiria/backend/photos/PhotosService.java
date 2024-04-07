@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
-import static pl.tropiria.backend.config.constants.ErrorsConstant.FILED_TO_SAVE_PHOTO_ON_DISK;
+import static pl.tropiria.backend.config.constants.ErrorsConstant.FAIL_TO_SAVE_PHOTO_ON_DISK;
 import static pl.tropiria.backend.config.constants.PhotosConstant.PHOTOS_PATH;
 import static pl.tropiria.backend.utilites.SHAEncoder.encode;
 
@@ -64,13 +64,13 @@ public class PhotosService {
             photo.transferTo(new File(photoPath));
         } catch (IOException e) {
             deletePhotoPathFromDatabase(photosDto);
-            throw new IllegalFormatCodePointException(FILED_TO_SAVE_PHOTO_ON_DISK.getCode());
+            throw new IllegalFormatCodePointException(FAIL_TO_SAVE_PHOTO_ON_DISK.getCode());
         }
     }
 
     private void savePhotoToDatabase(PhotosDto photosDto){
         if (ifPhotoPathExists(photosDto.getPhotoPath())) {
-            throw new IllegalFormatCodePointException(FILED_TO_SAVE_PHOTO_ON_DISK.getCode());
+            throw new IllegalFormatCodePointException(FAIL_TO_SAVE_PHOTO_ON_DISK.getCode());
         }
         photosRepository.save(PhotosDtoMapper.map(photosDto));
     }

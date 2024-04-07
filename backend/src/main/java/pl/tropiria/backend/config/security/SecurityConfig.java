@@ -12,9 +12,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
-import static pl.tropiria.backend.config.constants.EndpointConstant.COLORS;
-import static pl.tropiria.backend.config.constants.EndpointConstant.PHOTOS;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {

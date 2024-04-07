@@ -33,13 +33,13 @@ public class AnimalController {
                                         @RequestParam("sex") Integer sex,
                                         @RequestParam("dateOfBirth") String dateOfBirth,
                                         @RequestParam("species") String speciesName,
-                                        @RequestParam("colors") List<String> colors,
+                                        @RequestParam("morphs") List<String> morphs,
                                         @RequestParam("photos") MultipartFile[] photos,
                                         @RequestParam(value = "name",required = false) String name,
                                         @RequestParam(value = "price",required = false) Long price,
                                         @RequestParam(value = "reservationStatus",required = false) String reservationStatus,
                                         @RequestParam(value = "parents",required = false) List<String> parents) {
-        animalService.saveAnimal(description,sex,dateOfBirth,speciesName,colors,photos,name,price,reservationStatus,parents);
+        animalService.saveAnimal(description,sex,dateOfBirth,speciesName,morphs,photos,name,price,reservationStatus,parents);
         return ResponseEntity.ok().build();
     }
 

@@ -1,4 +1,4 @@
-package pl.tropiria.backend.color;
+package pl.tropiria.backend.morph;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "color")
+@Table(name = "morph")
 @Data
-public class Color {
+public class Morph {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
