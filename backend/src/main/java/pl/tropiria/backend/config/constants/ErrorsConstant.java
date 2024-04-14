@@ -20,6 +20,9 @@ public enum ErrorsConstant {
     PARENTS_NOT_FOUND(11, "Parents not found"),
     JSON_PARSE_ERROR(12, "Json parse error"),
     INVALID_RESERVATION_STATUS(13, "Invalid reservation status"),
+    USER_NOT_FOUND(14,"User details not found"),
+    INVALID_PASSWORD(15,"Invalid password"),
+    INVALID_TOKEN(16,"Invalid token"),
     ;
     private final int code;
     private final String message;

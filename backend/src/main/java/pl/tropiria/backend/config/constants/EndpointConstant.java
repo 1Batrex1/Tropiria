@@ -1,9 +1,8 @@
 package pl.tropiria.backend.config.constants;
 
-import lombok.Getter;
 
-@Getter
-public  class EndpointConstant {
+
+public  interface EndpointConstant {
 
     public static final String SPECIES = "/species";
 
@@ -13,6 +12,7 @@ public  class EndpointConstant {
 
     public static final String ANIMALS = "/animals";
 
-    public static final String ANIMALS_FOR_SALE = "/animals-for-sale";
+    public static final String LOGIN = "/login";
 
+    public static final String ADMIN_PANEL= "/admin-panel";
 }
