@@ -14,7 +14,6 @@ import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 import static pl.tropiria.backend.config.constants.ErrorsConstant.FAIL_TO_SAVE_PHOTO_ON_DISK;
-import static pl.tropiria.backend.config.constants.PhotosConstant.PHOTOS_PATH;
 import static pl.tropiria.backend.utilites.SHAEncoder.encode;
 
 @Service
@@ -22,6 +21,9 @@ import static pl.tropiria.backend.utilites.SHAEncoder.encode;
 public class PhotosService {
 
     private final PhotosRepository photosRepository;
+
+    private final static String PHOTOS_PATH = System.getProperty("user.dir").replace("\\backend", "") + File.separator + "photos";
+
 
     private static String photoName;
 
@@ -90,7 +92,7 @@ public class PhotosService {
     }
 
     private static void setPhotoPath() {
-        photoPath = PHOTOS_PATH.getPath() + File.separator + photoName;
+        photoPath = PHOTOS_PATH + File.separator + photoName;
     }
 
     private static void setPhotosDto() {
