@@ -1,0 +1,32 @@
+spring:
+  # Hibernate
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: create-drop
+          import_files: /sql/data.sql
+
+
+  # Database
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Tropiria
+    username: 
+    password:
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode:
+# Server
+server:
+  port: 8080
+  servlet:
+    context-path: /tropiria/api/v1
+
+  # Logging
+logging:
+  level:
+    org:
+      springframework: info
+
