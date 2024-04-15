@@ -1,6 +1,14 @@
 package pl.tropiria.backend.config.constants;
 
-public interface SecurityConstant {
+import java.util.IllegalFormatCodePointException;
+
+import static pl.tropiria.backend.config.constants.ErrorsConstant.UTILITY_CLASS;
+
+public class SecurityConstant {
+
+    private SecurityConstant() {
+        throw new IllegalFormatCodePointException(UTILITY_CLASS.getCode());
+    }
 
     public static final String JWT_HEADER = "Authorization";
 
