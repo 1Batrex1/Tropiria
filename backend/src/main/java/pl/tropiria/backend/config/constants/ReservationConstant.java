@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ReservationConstant {
     FOR_SALE("NA SPRZEDAŻ"),
-    RESERVED("ZAREZERVOWANO");
+    RESERVED("ZAREZERWOWANO");
 
     private final String status;
 
