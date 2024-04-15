@@ -19,7 +19,6 @@ import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import static pl.tropiria.backend.config.constants.EndpointConstant.ADMIN_PANEL;
 import static pl.tropiria.backend.config.constants.EndpointConstant.LOGIN;
 import static pl.tropiria.backend.config.constants.ErrorsConstant.INVALID_TOKEN;
 import static pl.tropiria.backend.config.constants.SecurityConstant.JWT_HEADER;
@@ -56,6 +55,7 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
+        logger.info("Request path: " + request.getServletPath());
         return request.getServletPath().equals(LOGIN);
     }
 }
