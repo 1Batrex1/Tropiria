@@ -1,6 +1,7 @@
 package pl.tropiria.backend.config;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -13,6 +14,8 @@ import static pl.tropiria.backend.config.constants.ErrorsConstant.*;
 public class ExceptionController extends ResponseEntityExceptionHandler  {
 
     private static final String UNEXPECTED_ERROR = "Unexpected error";
+
+    private static final String BAD_CREDENTIALS = "Bad credentials";
 
     @ExceptionHandler(IllegalFormatCodePointException.class)
     protected ResponseEntity<String> handleIllegalFormatCodePointException(IllegalFormatCodePointException e) {
@@ -58,10 +61,29 @@ public class ExceptionController extends ResponseEntityExceptionHandler  {
         if (e.getCodePoint() == PARENTS_NOT_FOUND.getCode()) {
             return ResponseEntity.internalServerError().body(PARENTS_NOT_FOUND.getMessage());
         }
-
-
+        if (e.getCodePoint() == INVALID_PASSWORD.getCode()) {
+            return ResponseEntity.internalServerError().body(INVALID_PASSWORD.getMessage());
+        }
+        if (e.getCodePoint() == INVALID_TOKEN.getCode()) {
+            return ResponseEntity.internalServerError().body(INVALID_TOKEN.getMessage());
+        }
 
 
     return ResponseEntity.badRequest().body(UNEXPECTED_ERROR);
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    protected ResponseEntity<String> handleNullPointerException(NullPointerException e) {
+        return ResponseEntity.internalServerError().body(UNEXPECTED_ERROR);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    protected ResponseEntity<String> handleBadCredentialsException(BadCredentialsException e) {
+        return ResponseEntity.badRequest().body(BAD_CREDENTIALS);
+    }
+
+    @ExceptionHandler(Exception.class)
+    protected ResponseEntity<String> handleException(Exception e) {
+        return ResponseEntity.internalServerError().body(UNEXPECTED_ERROR);
     }
 }
