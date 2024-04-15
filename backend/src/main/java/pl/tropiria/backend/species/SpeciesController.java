@@ -1,6 +1,7 @@
 package pl.tropiria.backend.species;
 
 
+import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,5 +29,16 @@ public class SpeciesController {
     public ResponseEntity<?> saveSpecies(@RequestParam("species") String speciesName) {
         speciesService.saveSpecies(new SpeciesDto(speciesName));
         return ResponseEntity.status(HttpStatus.CREATED).body(SUCCESSFUL_SAVE_SPECIES);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<SpeciesDto> updateSpecies(@PathVariable Long id, @RequestParam("species") String speciesName) {
+        return ResponseEntity.ok(speciesService.updateSpecies(id, new SpeciesDto(speciesName)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteSpecies(@PathVariable Long id) {
+        speciesService.deleteSpecies(id);
+        return ResponseEntity.ok().build();
     }
 }

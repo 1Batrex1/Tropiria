@@ -22,8 +22,19 @@ public class MorphController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveMorphs(MorphDto morphDto) {
-        morphService.saveColor(morphDto);
+    public ResponseEntity<?> saveMorphs(@RequestParam("morph") String morphName) {
+        morphService.saveColor(new MorphDto(morphName));
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MorphDto> updateMorph(@PathVariable Long id, @RequestParam("morph") String morphName) {
+        return ResponseEntity.ok(morphService.updateMorph(id, new MorphDto(morphName)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteMorph(@PathVariable Long id) {
+        morphService.deleteMorph(id);
         return ResponseEntity.ok().build();
     }
 

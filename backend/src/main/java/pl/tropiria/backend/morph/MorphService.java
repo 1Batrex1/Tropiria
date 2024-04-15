@@ -8,6 +8,7 @@ import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 import static pl.tropiria.backend.config.constants.ErrorsConstant.MORPH_ALREADY_EXISTS;
+import static pl.tropiria.backend.config.constants.ErrorsConstant.MORPH_NOT_FOUND;
 import static pl.tropiria.backend.utilites.MorphDtoMapper.map;
 
 @Service
@@ -28,6 +29,20 @@ public class MorphService {
             throw new IllegalFormatCodePointException(MORPH_ALREADY_EXISTS.getCode());
         }
         morphRepository.save(map(morphDto));
+    }
+
+    public MorphDto updateMorph(Long id, MorphDto morphDto) {
+        Morph morph = morphRepository.findById(id)
+                .orElseThrow(() -> new IllegalFormatCodePointException(MORPH_NOT_FOUND.getCode()));
+        morph.setName(morphDto.getName());
+        morphRepository.save(morph);
+        return MorphDtoMapper.map(morph);
+    }
+
+    public void deleteMorph(Long id) {
+        Morph morph = morphRepository.findById(id)
+                .orElseThrow(() -> new IllegalFormatCodePointException(MORPH_NOT_FOUND.getCode()));
+        morphRepository.delete(morph);
     }
 
     public Morph getMorphByName(String name) {
