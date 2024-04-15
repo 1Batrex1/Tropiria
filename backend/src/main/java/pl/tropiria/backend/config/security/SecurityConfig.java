@@ -41,7 +41,6 @@ public class SecurityConfig {
     private static final String CSRF_NAME = "_csrf";
 
 
-
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -71,11 +70,11 @@ public class SecurityConfig {
                     };
                     cors.configurationSource(source);
                 }).csrf(csrf -> csrf
-                        .ignoringRequestMatchers(LOGIN)
                         .csrfTokenRequestHandler(csrfTokenRequestAttributeHandler)
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()
-                        )
+                        .ignoringRequestMatchers(LOGIN)
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 )
+
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
                 .addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class)
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
@@ -83,10 +82,11 @@ public class SecurityConfig {
                 .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests(request ->
                         request
-                                .requestMatchers(HttpMethod.POST, ANIMALS).hasRole(ADMIN_ROLE)
-                                .requestMatchers(HttpMethod.POST, SPECIES).hasRole(ADMIN_ROLE)
-                                .requestMatchers(HttpMethod.POST, MORPH).hasRole(ADMIN_ROLE)
-                                .anyRequest().permitAll()
+                                .requestMatchers(HttpMethod.GET, SPECIES).permitAll()
+                                .requestMatchers(HttpMethod.GET, ANIMALS).permitAll()
+                                .requestMatchers(HttpMethod.GET, MORPH).permitAll()
+                                .requestMatchers(LOGIN).permitAll()
+                                .anyRequest().hasRole(ADMIN_ROLE)
 
                 ).httpBasic(Customizer.withDefaults());
 
