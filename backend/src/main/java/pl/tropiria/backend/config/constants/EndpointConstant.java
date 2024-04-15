@@ -1,8 +1,14 @@
 package pl.tropiria.backend.config.constants;
 
 
+import java.util.IllegalFormatCodePointException;
 
-public  interface EndpointConstant {
+public class EndpointConstant {
+
+    private EndpointConstant() {
+        throw new IllegalFormatCodePointException(ErrorsConstant.UTILITY_CLASS.getCode());
+    }
+
 
     public static final String SPECIES = "/species";
 
@@ -14,5 +20,4 @@ public  interface EndpointConstant {
 
     public static final String LOGIN = "/login";
 
-    public static final String ADMIN_PANEL= "/admin-panel";
 }
