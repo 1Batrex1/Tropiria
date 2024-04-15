@@ -1,16 +1,14 @@
 spring:
   liquibase:
-      enabled: false
-      change-log: classpath:/db/master.xml
-      contexts: dev
+    change-log: classpath:/db/master.xml
+    contexts: dev
   # Hibernate
   jpa:
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         hbm2ddl:
-          auto: create-drop
-          import_files: /db/data.sql
+          auto: validate
 
 
   # Database
