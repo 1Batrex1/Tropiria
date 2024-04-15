@@ -19,6 +19,9 @@ public class AuthenticationController {
 
     @RequestMapping(LOGIN)
     public Account getUserDetailsAfterLogin(Authentication authentication){
+        if (authentication == null){
+            return null;
+        }
         List<Account> accounts = accountRepository.findByLoginAndActive(authentication.getName());
         if(accounts.isEmpty()){
             return null;
