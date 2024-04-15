@@ -1,0 +1,34 @@
+spring:
+  liquibase:
+    change-log: classpath:/db/master.xml
+    contexts: dev
+  # Hibernate
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: validate
+
+
+  # Database
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Tropiria
+    username: postgres
+    password: Q@werty
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode:
+  # Server
+server:
+  port: 8080
+  servlet:
+    context-path: /tropiria/api/v1
+
+    # Logging
+logging:
+  level:
+    org:
+      springframework: debug
+
