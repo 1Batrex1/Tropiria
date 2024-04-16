@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import pl.tropiria.backend.admin.Account;
-import pl.tropiria.backend.admin.AccountRepository;
+import pl.tropiria.backend.account.Account;
+import pl.tropiria.backend.account.AccountRepository;
 import pl.tropiria.backend.role.Role;
 
 import java.util.ArrayList;

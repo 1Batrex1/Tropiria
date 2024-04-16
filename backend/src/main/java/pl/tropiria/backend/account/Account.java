@@ -1,4 +1,4 @@
-package pl.tropiria.backend.admin;
+package pl.tropiria.backend.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

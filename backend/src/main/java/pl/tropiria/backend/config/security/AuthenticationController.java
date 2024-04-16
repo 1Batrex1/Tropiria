@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.tropiria.backend.admin.Account;
-import pl.tropiria.backend.admin.AccountRepository;
+import pl.tropiria.backend.account.Account;
+import pl.tropiria.backend.account.AccountRepository;
 
 import java.util.List;
 

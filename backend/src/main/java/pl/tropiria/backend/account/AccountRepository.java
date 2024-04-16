@@ -1,4 +1,4 @@
-package pl.tropiria.backend.admin;
+package pl.tropiria.backend.account;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
