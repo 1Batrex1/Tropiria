@@ -18,12 +18,12 @@ public class MorphController {
 
     @GetMapping
     public ResponseEntity<List<MorphDto>> getMorphs() {
-        return ResponseEntity.ok(morphService.getColors());
+        return ResponseEntity.ok(morphService.getMorphs());
     }
 
     @PostMapping
     public ResponseEntity<?> saveMorphs(@RequestParam("morph") String morphName) {
-        morphService.saveColor(new MorphDto(morphName));
+        morphService.saveMorph(new MorphDto(morphName));
         return ResponseEntity.ok().build();
     }
 
