@@ -1,13 +1,7 @@
 package pl.tropiria.backend.species;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.fge.jsonpatch.JsonPatchException;
-import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.tropiria.backend.utilites.SpeciesDtoMapper;
 
 import java.util.IllegalFormatCodePointException;
 import java.util.List;
@@ -24,7 +18,10 @@ public class SpeciesService {
         return speciesRepository
                 .findAllByOrderByIdAsc()
                 .stream()
-                .map(SpeciesDtoMapper::map)
+                .map(species -> SpeciesDto.builder()
+                        .id(species.getId())
+                        .name(species.getName())
+                        .build())
                 .toList();
     }
 
@@ -32,7 +29,9 @@ public class SpeciesService {
         if (isSpeciesExists(speciesDto.getName())) {
             throw new IllegalFormatCodePointException(SPECIES_ALREADY_EXISTS.getCode());
         }
-        speciesRepository.save(SpeciesDtoMapper.map(speciesDto));
+        speciesRepository.save(Species.builder()
+                .name(speciesDto.getName())
+                .build());
     }
 
     public Species getSpeciesByName(String name) {
@@ -43,12 +42,17 @@ public class SpeciesService {
         return speciesRepository.findByName(name) != null;
     }
 
+
+
     public SpeciesDto updateSpecies(Long id, SpeciesDto speciesDto) {
-           Species species = speciesRepository.findById(id)
-                    .orElseThrow(() -> new IllegalFormatCodePointException(SPECIES_NOT_FOUND.getCode()));
-            species.setName(speciesDto.getName());
-            speciesRepository.save(species);
-            return SpeciesDtoMapper.map(species);
+        Species species = speciesRepository.findById(id)
+                .orElseThrow(() -> new IllegalFormatCodePointException(SPECIES_NOT_FOUND.getCode()));
+        species.setName(speciesDto.getName());
+        speciesRepository.save(species);
+        return SpeciesDto.builder()
+                .id(species.getId())
+                .name(species.getName())
+                .build();
     }
 
     public void deleteSpecies(Long id) {

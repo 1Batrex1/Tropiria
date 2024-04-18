@@ -1,15 +1,13 @@
 package pl.tropiria.backend.photos;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "photos")
 @Data
+@Builder
 public class Photos {
 
     @Id

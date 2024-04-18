@@ -13,7 +13,9 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
+@Builder
 @Entity
 @Table(name = "animal")
 public class Animal {
@@ -38,7 +40,7 @@ public class Animal {
     @ManyToMany
     private List<Morph> morphs;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Photos> photos;
 
     @Embedded

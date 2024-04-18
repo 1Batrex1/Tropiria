@@ -1,5 +1,7 @@
 package pl.tropiria.backend.animal;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.tropiria.backend.animal.forsale.AnimalForSale;
@@ -11,6 +13,8 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AnimalDto {
 
 
@@ -32,17 +36,5 @@ public class AnimalDto {
 
     private AnimalForSale animalForSale;
 
-    public AnimalDto(String description,
-                     Integer sex,
-                     String dateOfBirth,
-                     Species species,
-                     List<Morph> morphs) {
-        this.description = description;
-        this.sex = sex;
-        this.dateOfBirth = dateOfBirth;
-        this.species = species;
-        this.morphs = morphs;
-
-    }
 
 }

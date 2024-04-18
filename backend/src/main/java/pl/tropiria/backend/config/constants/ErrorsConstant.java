@@ -23,6 +23,7 @@ public enum ErrorsConstant {
     USER_NOT_FOUND(14,"User details not found"),
     INVALID_PASSWORD(15,"Invalid password"),
     INVALID_TOKEN(16,"Invalid token"),
+    FAIL_TO_DELETE_PHOTO(17,"Failed to delete photo"),
     ;
     private final int code;
     private final String message;

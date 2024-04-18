@@ -27,26 +27,26 @@ public class TropiriaUserDetails implements UserDetailsService {
 
     private static final Log logger = LogFactory.getLog(TropiriaUserDetails.class);
 
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        String userName,password = null;
-        List<GrantedAuthority> authorites = null;
         List<Account> account = accountRepository.findByLoginAndActive(username);
-
         if (account.isEmpty())
         {
             throw new UsernameNotFoundException(USER_NOT_FOUND.getMessage());
         }
-        else
-        {
-            Account userAccount = account.getFirst();
-            userName = userAccount.getLogin();
-            password = userAccount.getPassword();
-            authorites = new ArrayList<>();
-            for (Role role : userAccount.getRoles()) {
-                authorites.add(new SimpleGrantedAuthority(role.getName()));
-            }
+        return setUpUser(account.getFirst());
+
+
+    }
+
+    private UserDetails setUpUser(Account userAccount) {
+        String userName = userAccount.getLogin();
+        String password = userAccount.getPassword();
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (Role role : userAccount.getRoles()) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
-        return new User(userName,password,authorites);
+        return new User(userName, password, authorities);
     }
 }

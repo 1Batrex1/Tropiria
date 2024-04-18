@@ -36,17 +36,8 @@ public class AnimalController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveAnimal(@RequestParam("description") String description,
-                                        @RequestParam("sex") Integer sex,
-                                        @RequestParam("dateOfBirth") String dateOfBirth,
-                                        @RequestParam("species") String speciesName,
-                                        @RequestParam("morphs") List<String> morphs,
-                                        @RequestParam("photos") MultipartFile[] photos,
-                                        @RequestParam(value = "name", required = false) String name,
-                                        @RequestParam(value = "price", required = false) Long price,
-                                        @RequestParam(value = "reservationStatus", required = false) String reservationStatus,
-                                        @RequestParam(value = "parents", required = false) List<String> parents) {
-        animalService.saveAnimal(description, sex, dateOfBirth, speciesName, morphs, photos, name, price, reservationStatus, parents);
+    public ResponseEntity<?> saveAnimal(@RequestParam("animal") AnimalDto animalDto, @RequestParam("photos") MultipartFile[] photos) {
+        animalService.saveAnimal(animalDto, photos);
         return ResponseEntity.status(HttpStatus.CREATED).body(SUCCESSFUL_SAVE_ANIMAL);
     }
 
@@ -55,7 +46,6 @@ public class AnimalController {
         animalService.deleteAnimal(id);
         return ResponseEntity.ok().build();
     }
-
 
 
 }

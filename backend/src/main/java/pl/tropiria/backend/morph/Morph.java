@@ -2,6 +2,7 @@ package pl.tropiria.backend.morph;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "morph")
 @Data
+@Builder
 public class Morph {
 
     @Id
