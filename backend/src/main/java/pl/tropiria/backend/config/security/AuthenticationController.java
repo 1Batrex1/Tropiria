@@ -2,6 +2,8 @@ package pl.tropiria.backend.config.security;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.tropiria.backend.account.Account;
@@ -9,6 +11,7 @@ import pl.tropiria.backend.account.AccountRepository;
 
 import java.util.List;
 
+import static pl.tropiria.backend.config.constants.EndpointConstant.CSRF;
 import static pl.tropiria.backend.config.constants.EndpointConstant.LOGIN;
 
 @RestController
@@ -29,4 +32,8 @@ public class AuthenticationController {
         return accounts.getFirst();
     }
 
+    @GetMapping(CSRF)
+    public CsrfToken getCsrfToken(CsrfToken csrfToken){
+        return csrfToken;
+    }
 }

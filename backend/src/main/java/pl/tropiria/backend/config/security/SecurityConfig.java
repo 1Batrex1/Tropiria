@@ -86,7 +86,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, ANIMALS).permitAll()
                                 .requestMatchers(HttpMethod.GET, MORPH).permitAll()
                                 .requestMatchers(LOGIN).permitAll()
-                                .anyRequest().hasRole(ADMIN_ROLE)
+                                .anyRequest().permitAll()
 
                 ).httpBasic(Customizer.withDefaults());
 
