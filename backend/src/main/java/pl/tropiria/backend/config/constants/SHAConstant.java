@@ -10,6 +10,4 @@ public enum SHAConstant {
 
     private final String algorithm;
     private final String extension;
-
-
 }

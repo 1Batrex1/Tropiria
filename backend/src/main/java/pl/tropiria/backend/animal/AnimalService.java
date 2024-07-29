@@ -121,6 +121,6 @@ public class AnimalService {
 
 
     private boolean validReservationStatus(String reservationStatus) {
-        return reservationStatus.equals(ReservationConstant.RESERVED.getStatus()) || reservationStatus.equals(ReservationConstant.FOR_SALE.getStatus());
+        return reservationStatus.equals(ReservationConstant.RESERVED) || reservationStatus.equals(ReservationConstant.FOR_SALE);
     }
 }
