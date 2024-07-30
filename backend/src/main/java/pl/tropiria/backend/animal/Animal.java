@@ -43,6 +43,6 @@ public class Animal {
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Photos> photos;
 
-    @Embedded
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true,mappedBy = "animal")
     private AnimalForSale animalForSale;
 }
