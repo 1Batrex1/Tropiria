@@ -27,7 +27,7 @@ public class SpeciesService {
 
     public void saveSpecies(SpeciesDto speciesDto) {
         if (isSpeciesExists(speciesDto.getName())) {
-            throw new IllegalFormatCodePointException(SPECIES_ALREADY_EXISTS.getCode());
+            throw new IllegalFormatCodePointException(SPECIES_ALREADY_EXISTS.CODE);
         }
         speciesRepository.save(Species.builder()
                 .name(speciesDto.getName())
@@ -46,7 +46,7 @@ public class SpeciesService {
 
     public SpeciesDto updateSpecies(Long id, SpeciesDto speciesDto) {
         Species species = speciesRepository.findById(id)
-                .orElseThrow(() -> new IllegalFormatCodePointException(SPECIES_NOT_FOUND.getCode()));
+                .orElseThrow(() -> new IllegalFormatCodePointException(SPECIES_NOT_FOUND.CODE));
         species.setName(speciesDto.getName());
         speciesRepository.save(species);
         return SpeciesDto.builder()
@@ -57,7 +57,7 @@ public class SpeciesService {
 
     public void deleteSpecies(Long id) {
         Species species = speciesRepository.findById(id)
-                .orElseThrow(() -> new IllegalFormatCodePointException(SPECIES_NOT_FOUND.getCode()));
+                .orElseThrow(() -> new IllegalFormatCodePointException(SPECIES_NOT_FOUND.CODE));
         speciesRepository.delete(species);
     }
 }

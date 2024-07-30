@@ -72,7 +72,7 @@ public class PhotosService {
 
     private void savePhotoToDatabase(PhotosDto photosDto) {
         if (ifPhotoPathExists(photosDto.getPhotoPath())) {
-            throw new IllegalFormatCodePointException(FAIL_TO_SAVE_PHOTO_ON_DISK.getCode());
+            throw new IllegalFormatCodePointException(FAIL_TO_SAVE_PHOTO_ON_DISK.CODE);
         }
         photosRepository.save(Photos.builder()
                 .id(photosDto.getId())
@@ -90,7 +90,7 @@ public class PhotosService {
             photo.transferTo(new File(photoPath));
         } catch (IOException e) {
             deletePhotoPathFromDatabase(photosDto);
-            throw new IllegalFormatCodePointException(FAIL_TO_SAVE_PHOTO_ON_DISK.getCode());
+            throw new IllegalFormatCodePointException(FAIL_TO_SAVE_PHOTO_ON_DISK.CODE);
         }
     }
 
@@ -106,7 +106,7 @@ public class PhotosService {
         try {
             Files.delete(Path.of(photosDto.getPhotoPath()));
         } catch (IOException e) {
-            throw new IllegalFormatCodePointException(FAIL_TO_DELETE_PHOTO.getCode());
+            throw new IllegalFormatCodePointException(FAIL_TO_DELETE_PHOTO.CODE);
         }
     }
 

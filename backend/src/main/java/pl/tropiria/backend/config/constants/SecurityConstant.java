@@ -7,7 +7,7 @@ import static pl.tropiria.backend.config.constants.ErrorsConstant.UTILITY_CLASS;
 public class SecurityConstant {
 
     private SecurityConstant() {
-        throw new IllegalFormatCodePointException(UTILITY_CLASS.getCode());
+        throw new IllegalFormatCodePointException(UTILITY_CLASS.CODE);
     }
 
     public static final String JWT_HEADER = "Authorization";

@@ -6,7 +6,7 @@ import java.util.IllegalFormatCodePointException;
 public class EndpointConstant {
 
     private EndpointConstant() {
-        throw new IllegalFormatCodePointException(ErrorsConstant.UTILITY_CLASS.getCode());
+        throw new IllegalFormatCodePointException(ErrorsConstant.UTILITY_CLASS.CODE);
     }
 
 

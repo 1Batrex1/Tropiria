@@ -3,7 +3,6 @@ package pl.tropiria.backend.config.constants;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Getter
 @AllArgsConstructor
 public enum ErrorsConstant {
     SPECIES_ALREADY_EXISTS(0, "Species already exists"),
@@ -24,8 +23,10 @@ public enum ErrorsConstant {
     INVALID_PASSWORD(15,"Invalid password"),
     INVALID_TOKEN(16,"Invalid token"),
     FAIL_TO_DELETE_PHOTO(17,"Failed to delete photo"),
+    INVALID_JSON(18,"Invalid json"),
+    INVALID_SEX(19,"Invalid sex"),
     ;
-    private final int code;
-    private final String message;
+    public final int CODE;
+    public final String MESSAGE;
 }
 
