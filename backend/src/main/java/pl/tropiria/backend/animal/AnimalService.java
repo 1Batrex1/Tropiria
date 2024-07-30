@@ -1,8 +1,13 @@
 package pl.tropiria.backend.animal;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import pl.tropiria.backend.config.constants.SexConstant;
 import pl.tropiria.backend.morph.Morph;
 import pl.tropiria.backend.morph.MorphService;
 import pl.tropiria.backend.config.constants.ReservationConstant;
@@ -24,7 +29,6 @@ public class AnimalService {
     private final PhotosService photosService;
     private final SpeciesService speciesService;
     private final MorphService morphService;
-
 
     public List<AnimalDto> getAnimals() {
         return animalRepository
@@ -59,11 +63,12 @@ public class AnimalService {
                     .animalForSale(animal.getAnimalForSale())
                     .build();
         }
-        throw new IllegalFormatCodePointException(ANIMAL_NOT_FOUND.getCode());
+        throw new IllegalFormatCodePointException(ANIMAL_NOT_FOUND.CODE);
     }
 
-    public void saveAnimal(AnimalDto animalDto, MultipartFile[] photos) {
+    public void saveAnimal(String animalJson, MultipartFile[] photos) {
         List<Photos> photosList = photosService.savePhoto(photos);
+        AnimalDto animalDto = mapJsonToDto(animalJson);
         animalDto.setPhotos(photosList);
         checkAnimalDto(animalDto);
         animalRepository.save(Animal.builder()
@@ -79,20 +84,46 @@ public class AnimalService {
 
     }
 
+    private AnimalDto mapJsonToDto(String animalJson) {
+        try {
+            return new ObjectMapper().readValue(animalJson, AnimalDto.class);
+        }
+        catch (JsonProcessingException e) {
+            throw new IllegalFormatCodePointException(INVALID_JSON.CODE);
+        }
+    }
+
     private void checkAnimalDto(AnimalDto animalDto) {
         if (animalDto.getAnimalForSale() != null) {
             if (!validReservationStatus(animalDto.getAnimalForSale().getReservationStatus())) {
-                throw new IllegalFormatCodePointException(INVALID_RESERVATION_STATUS.getCode());
+                throw new IllegalFormatCodePointException(INVALID_RESERVATION_STATUS.CODE);
             }
+        }
+        if (!validSex(animalDto.getSex())) {
+            throw new IllegalFormatCodePointException(INVALID_SEX.CODE);
         }
         if (!speciesService.isSpeciesExists(animalDto.getSpecies().getName())) {
-            throw new IllegalFormatCodePointException(SPECIES_NOT_FOUND.getCode());
+            throw new IllegalFormatCodePointException(SPECIES_NOT_FOUND.CODE);
         }
+        else
+        {
+            animalDto.setSpecies(speciesService.getSpeciesByName(animalDto.getSpecies().getName()));
+        }
+
+
+        List<Morph> morphList = new ArrayList<>();
+
         for (Morph morph : animalDto.getMorphs()) {
             if (!morphService.isMorphExists(morph.getName())) {
-                throw new IllegalFormatCodePointException(MORPH_NOT_FOUND.getCode());
+                throw new IllegalFormatCodePointException(MORPH_NOT_FOUND.CODE);
             }
+            else
+            {
+                morphList.add(morphService.getMorphByName(morph.getName()));
+            }
+
         }
+        animalDto.setMorphs(morphList);
     }
 
     public void deleteAnimal(long id) {
@@ -115,6 +146,11 @@ public class AnimalService {
         }
     }
 
+    public Page<Animal> getAnimalsForSale(Pageable pagable)
+    {
+        return animalRepository.findAllAnimalsForSale(pagable);
+    }
+
     private boolean isAnimalExists(long id) {
         return animalRepository.findById(id) != null;
     }
@@ -122,5 +158,10 @@ public class AnimalService {
 
     private boolean validReservationStatus(String reservationStatus) {
         return reservationStatus.equals(ReservationConstant.RESERVED) || reservationStatus.equals(ReservationConstant.FOR_SALE);
+    }
+
+    private boolean validSex(int sex)
+    {
+        return sex == SexConstant.UNKNOWN || sex == SexConstant.MALE || sex == SexConstant.FEMALE;
     }
 }
