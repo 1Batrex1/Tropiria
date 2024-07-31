@@ -25,6 +25,7 @@ public enum ErrorsConstant {
     FAIL_TO_DELETE_PHOTO(17,"Failed to delete photo"),
     INVALID_JSON(18,"Invalid json"),
     INVALID_SEX(19,"Invalid sex"),
+    FAILED_TO_LOAD_PHOTO(20,"Failed to load photo"),
     ;
     public final int CODE;
     public final String MESSAGE;

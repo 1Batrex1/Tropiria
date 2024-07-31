@@ -73,9 +73,12 @@ public class ExceptionController extends ResponseEntityExceptionHandler  {
         if (e.getCodePoint() == INVALID_SEX.CODE) {
             return ResponseEntity.internalServerError().body(INVALID_SEX.MESSAGE);
         }
+        if (e.getCodePoint() == FAILED_TO_LOAD_PHOTO.CODE) {
+            return ResponseEntity.internalServerError().body(FAILED_TO_LOAD_PHOTO.MESSAGE);
+        }
 
 
-    return ResponseEntity.badRequest().body(UNEXPECTED_ERROR);
+   return ResponseEntity.badRequest().body(UNEXPECTED_ERROR);
     }
 
     @ExceptionHandler(NullPointerException.class)
