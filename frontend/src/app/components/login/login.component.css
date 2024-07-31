@@ -1,0 +1,55 @@
+.container
+{
+  min-height: 25vh;
+  display: flex;
+  justify-content: center;
+
+  margin: 15em auto 15em;
+
+}
+
+form
+{
+  font-family: "Roboto", sans-serif;
+  position: relative;
+  z-index: 1;
+  opacity: 99% ;
+  max-width: 25%;
+  background: #A4B6AA;
+  border-radius: 1em;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  padding: 3em 4em 3em 4em;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+input
+{
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+button
+{
+  text-transform: uppercase;
+  outline: 0;
+  background: #4CAF50;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+
+

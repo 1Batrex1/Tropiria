@@ -1,0 +1,57 @@
+.landing-page-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+  background-color: #FFFFFF;
+}
+
+
+.description {
+  width: 60%;
+  font-size: large;
+  margin: 2em;
+  text-align: justify;
+}
+
+
+.nav-container
+{
+  display: flex;
+  justify-content: space-evenly;
+  width: 60%;
+  padding: 1em;
+  gap: 6em;
+
+}
+
+.nav-container img {
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.nav-container a {
+  text-decoration: none;
+  color: black;
+}
+
+.nav-container  p {
+  text-align: center;
+  font-size: 1.75em;
+  margin: 0.25em;
+}
+
+.navbar-button
+{
+  background-color: #61e282;
+
+}
+
+.animals{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, auto);
+  grid-auto-flow: row;
+  gap: 10px;
+}

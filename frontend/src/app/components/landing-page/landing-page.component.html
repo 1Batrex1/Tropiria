@@ -1,0 +1,33 @@
+<div class="landing-page-container">
+
+  <div class="description">
+
+    <h1>Tropirria to lokalna hodowla gekonów orzesionych</h1>
+    <p>Hodowla gekonów orzęsionych to prawdziwa pasja i zobowiązanie. Nasze gekony są otoczone miłością i troską, co
+      przekłada się na ich szczęście i zdrowie. Dbamy o to, aby miały dobrze zbilansowaną dietę, dostarczając im
+      odpowiednich składników odżywczych. Każdy z naszych podopiecznych mieszka w starannie przygotowanym terrarium,
+      które odzwierciedla ich naturalne środowisko. Te domki zapewniają im nie tylko komfort, ale także przestrzeń do
+      eksploracji i aktywności. Jesteśmy dumni z naszej hodowli i z radością dzielimy się naszą wiedzą i doświadczeniem
+      z innymi miłośnikami tych fascynujących stworzeń.
+    </p>
+  </div>
+
+  <div class="nav-container">
+    <a class="navbar-button" routerLink="/animals">
+      <img src="assets/placeholderbutton.png" alt="dostępne zwierzęta">
+      <p>Dostępne zwierzęta</p>
+    </a>
+    <a class="navbar-button" routerLink="/order-terrarium">
+      <img src="assets/placeholderbutton.png" alt="dostępne zwierzęta">
+      <p>Zamów terrarium</p>
+    </a>
+    <a class="navbar-button" routerLink="/gallery">
+      <img src="assets/placeholderbutton.png" alt="dostępne zwierzęta">
+      <p>Galeria</p>
+    </a>
+  </div>
+  <div class="animals">
+    <app-landing-page-animal *ngFor="let animal of animalsForSale" [animal]="animal"></app-landing-page-animal>
+  </div>
+</div>
+

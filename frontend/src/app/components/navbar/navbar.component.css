@@ -1,0 +1,21 @@
+.nav {
+  position: sticky;
+  display: flex;
+  justify-content: flex-start;
+  gap: 4em;
+  align-items: center;
+  font-size: x-large;
+  background-image: linear-gradient(to right, #0cc0df, #75ff59);
+  height: 10vh;
+  width: 100%;
+  top: 0;
+  box-sizing: border-box;
+  padding-left: 3em;
+}
+
+.nav img {
+  height: 7vh;
+  width: 7vw;
+  margin-left: 18em;
+}
+

@@ -7,7 +7,15 @@ import {HTTP_INTERCEPTORS, provideHttpClient, withFetch} from "@angular/common/h
 import {Interceptor} from "./security/interceptor";
 import {provideToastr} from "ngx-toastr";
 import {provideAnimations} from "@angular/platform-browser/animations";
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideClientHydration(), provideHttpClient(withFetch()),provideToastr(),provideAnimations()]
+  providers: [
+    provideRouter(routes),
+    provideClientHydration(),
+    provideHttpClient(withFetch()),
+    provideToastr(),
+    provideAnimations(),
+    provideAnimationsAsync(),
+  ]
 };
