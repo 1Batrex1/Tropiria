@@ -25,7 +25,7 @@ Insert Into animal_morphs (animal_id, morphs_id) values (1, 1);
 Insert Into animal_morphs (animal_id, morphs_id) values (1, 2);
 
 
-INSERT INTO photos (photo_path) values ('C:\IT\Programowanie\FullStack\Tropiria\photos\placeholder-1.png'), ('C:\IT\Programowanie\FullStack\Tropiria\photos\placeholder-2.png'), ('C:\IT\Programowanie\FullStack\Tropiria\photos\placeholder-3.png');
+INSERT INTO photos (photo_name) values ('placeholder-1.png'), ('placeholder-2.png'), ('placeholder-3.png');
 
 
 INSERT INTO animal_photos (animal_id, photos_id) values (1, 1), (1, 2), (1, 3);
