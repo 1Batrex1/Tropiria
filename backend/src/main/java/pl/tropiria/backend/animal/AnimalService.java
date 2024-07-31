@@ -134,11 +134,11 @@ public class AnimalService {
                         .stream()
                         .map(photos -> PhotosDto.builder()
                                 .id(photos.getId())
-                                .photoPath(photos.getPhotoPath())
+                                .photoName(photos.getPhotoName())
                                 .build())
                         .forEach(photosDto -> {
                             photosService.deletePhotoFromDisk(photosDto);
-                            photosService.deletePhotoPathFromDatabase(photosDto);
+                            photosService.deletePhotoNameFromDatabase(photosDto);
                         });
                 animalRepository.delete(a);
 

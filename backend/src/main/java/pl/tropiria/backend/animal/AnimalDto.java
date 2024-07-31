@@ -9,6 +9,7 @@ import pl.tropiria.backend.morph.Morph;
 import pl.tropiria.backend.photos.Photos;
 import pl.tropiria.backend.species.Species;
 
+import java.nio.file.Path;
 import java.util.List;
 
 @Data
@@ -33,6 +34,9 @@ public class AnimalDto {
     private List<Morph> morphs;
 
     private List<Photos> photos;
+
+
+
 
     private AnimalForSale animalForSale;
 
