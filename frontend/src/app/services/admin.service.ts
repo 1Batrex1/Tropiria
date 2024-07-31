@@ -22,7 +22,7 @@ export class AdminService {
     this.http.get(environment.login, {headers: headers}).subscribe(
       {
         next: (response) => {
-          this.browserStorage.setItem('jwt', JSON.stringify(response));
+          this.browserStorage.setItem('userdetails', JSON.stringify(response));
           this.router.navigate(['/admin']);
         },
         error: (e)  => {
