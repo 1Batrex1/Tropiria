@@ -58,7 +58,7 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session ->
                         session
-                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS )
+                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 )
                 .cors(cors -> {
@@ -83,9 +83,10 @@ public class SecurityConfig {
                 .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests(request ->
                         request
-                                .requestMatchers(HttpMethod.GET, SPECIES).permitAll()
-                                .requestMatchers(HttpMethod.GET, ANIMALS).permitAll()
-                                .requestMatchers(HttpMethod.GET, MORPH).permitAll()
+                                .requestMatchers(HttpMethod.GET, SPECIES + "/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, ANIMALS + "/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, MORPH + "/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, PHOTOS + "/**").permitAll()
                                 .requestMatchers(LOGIN).permitAll()
                                 .requestMatchers(CSRF).permitAll()
                                 .anyRequest().hasRole(ADMIN_ROLE)
