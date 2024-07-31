@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 public class PhotosDto {
 
     private long id;
-    private String photoPath;
+    private String photoName;
 
-    public PhotosDto(String photoPath) {
-        this.photoPath = photoPath;
+    public PhotosDto(String photoName) {
+        this.photoName = photoName;
     }
 }

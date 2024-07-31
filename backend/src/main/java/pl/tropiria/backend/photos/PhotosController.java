@@ -17,7 +17,11 @@ import static pl.tropiria.backend.config.constants.EndpointConstant.PHOTOS;
 @Profile("dev")
 public class PhotosController {
 
-    private final static String SUCCESSFUL_SAVE_PHOTO = "photo saved to disk";
+    private static final  String SUCCESSFUL_SAVE_PHOTO = "photo saved to disk";
+
+    private static final  String CONTENT_TYPE = "Content-Type";
+
+    private static final  String IMAGE_PNG = "image/png";
 
     private final PhotosService photosService;
 
@@ -30,6 +34,11 @@ public class PhotosController {
     public ResponseEntity savePhoto(@RequestParam("photos") MultipartFile[] photos){
         photosService.savePhoto(photos);
         return ResponseEntity.status(HttpStatus.CREATED).body(SUCCESSFUL_SAVE_PHOTO);
+    }
+
+    @GetMapping("/{filename}")
+    public ResponseEntity getPhoto(@PathVariable String filename) {
+        return ResponseEntity.ok().header(CONTENT_TYPE, IMAGE_PNG).body(photosService.getPhoto(filename));
     }
 
 }
