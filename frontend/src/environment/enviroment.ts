@@ -4,5 +4,7 @@ export const environment  = {
   morph: 'http://localhost:8080/tropiria/api/v1/morph',
   login : 'http://localhost:8080/tropiria/api/v1/login',
   animals : 'http://localhost:8080/tropiria/api/v1/animals',
-  apiURL: 'http://localhost:8080/tropiria/api/v1'
+  apiURL: 'http://localhost:8080/tropiria/api/v1',
+  admin: 'http://localhost:8080/tropiria/api/v1/admin',
+  photos: 'http://localhost:8080/tropiria/api/v1/photos',
 };
