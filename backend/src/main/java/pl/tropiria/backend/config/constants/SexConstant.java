@@ -1,7 +1,5 @@
 package pl.tropiria.backend.config.constants;
 
-import lombok.AllArgsConstructor;
-
 import java.util.IllegalFormatCodePointException;
 
 public class SexConstant {
@@ -10,11 +8,11 @@ public class SexConstant {
         throw new IllegalFormatCodePointException(ErrorsConstant.UTILITY_CLASS.CODE);
     }
 
-    public static int UNKNOWN = 0;
+    public static final int UNKNOWN = 0;
 
-    public static int MALE = 1;
+    public static final int MALE = 1;
 
-    public static int FEMALE = 2;
+    public static final int FEMALE = 2;
 
 
 }
