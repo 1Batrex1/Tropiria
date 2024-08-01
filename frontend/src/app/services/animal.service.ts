@@ -13,7 +13,7 @@ export class AnimalService {
 
 
   getAnimalsForSale(): Observable<getAnimalsForSale> {
-    return this.http.get<getAnimalsForSale>(environment.animals+'/for-sale?size=3');
+    return this.http.get<getAnimalsForSale>(environment.path.animals+'/for-sale?size=3');
   }
 }
 

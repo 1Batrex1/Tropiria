@@ -34,6 +34,6 @@ export class PhotoComponent {
   }
 
   loadPhoto(photoName: string) {
-      this.photoUrl = environment.photos + "/" + photoName;
+      this.photoUrl = environment.path.photos + "/" + photoName;
   }
 }
