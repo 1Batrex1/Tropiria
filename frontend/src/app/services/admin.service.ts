@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {environment} from "../../environment/enviroment";
 import {BrowserStorageService} from "./browser-storage.service";
 import {Router} from "@angular/router";
 import {ErrorHandlerService} from './error-handler.service';
 import {Observable} from "rxjs";
 import {SessionStorageService} from "./session-storage.service";
+import {environment} from "../../constants/environment";
 
 @Injectable({
   providedIn: 'root'

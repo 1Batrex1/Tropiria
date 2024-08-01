@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {PhotoService} from "../../services/photo.service";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {NgIf, NgOptimizedImage} from "@angular/common";
-import {environment} from "../../../environment/enviroment";
+import {environment} from "../../../constants/environment";
 
 @Component({
   selector: 'app-photo',

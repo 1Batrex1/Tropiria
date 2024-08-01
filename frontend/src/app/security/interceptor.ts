@@ -1,7 +1,7 @@
 import {HttpInterceptorFn} from "@angular/common/http";
 import {inject} from "@angular/core";
 import {SessionStorageService} from "../services/session-storage.service";
-import {environment} from "../../environment/enviroment";
+import {environment} from "../../constants/environment";
 
 export const interceptor : HttpInterceptorFn = (req, next) => {
 
