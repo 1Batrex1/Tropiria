@@ -11,8 +11,7 @@ import pl.tropiria.backend.account.AccountRepository;
 
 import java.util.List;
 
-import static pl.tropiria.backend.config.constants.EndpointConstant.CSRF;
-import static pl.tropiria.backend.config.constants.EndpointConstant.LOGIN;
+import static pl.tropiria.backend.config.constants.EndpointConstant.*;
 
 @RestController
 @AllArgsConstructor
@@ -35,5 +34,10 @@ public class AuthenticationController {
     @GetMapping(CSRF)
     public CsrfToken getCsrfToken(CsrfToken csrfToken){
         return csrfToken;
+    }
+
+    @GetMapping(JWT)
+    public Boolean isJwtValid(Authentication authentication){
+        return authentication != null;
     }
 }

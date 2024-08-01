@@ -22,4 +22,6 @@ public class EndpointConstant {
 
     public static final String CSRF = "/csrf";
 
+    public static final String JWT = "/jwt";
+
 }
