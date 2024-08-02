@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,12 +22,11 @@ import java.nio.charset.StandardCharsets;
 
 import static pl.tropiria.backend.config.constants.EndpointConstant.LOGIN;
 import static pl.tropiria.backend.config.constants.ErrorsConstant.INVALID_TOKEN;
-import static pl.tropiria.backend.config.constants.SecurityConstant.JWT_HEADER;
 
 public class JWTTokenValidatorFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String jwtToken = request.getHeader(JWT_HEADER);
+        String jwtToken = getJwtCookie(request.getCookies());
         if (jwtToken != null) {
             SecretKey key = Keys.hmacShaKeyFor(SecurityConstant.JWT_SECRET.getBytes(StandardCharsets.UTF_8));
             try {
@@ -50,6 +50,9 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
 
 
     }
+    else {
+        throw new BadCredentialsException(INVALID_TOKEN.MESSAGE);
+    }
         filterChain.doFilter(request, response);
     }
 
@@ -58,4 +61,20 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
         logger.info("Request path: " + request.getServletPath());
         return request.getServletPath().equals(LOGIN);
     }
+
+    private String getJwtCookie(Cookie[] cookies)
+    {
+        if (cookies != null)
+        {
+            for (Cookie cookie : cookies)
+            {
+                if (cookie.getName().equals(SecurityConstant.JWT_NAME))
+                {
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
+    }
+
 }
