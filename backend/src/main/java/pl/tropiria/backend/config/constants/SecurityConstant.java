@@ -10,6 +10,7 @@ public class SecurityConstant {
         throw new IllegalFormatCodePointException(UTILITY_CLASS.CODE);
     }
 
+    public static final String JWT_HEADER = "Authorization";
 
     //Your secret key
     public static final String JWT_SECRET = "hghfghfghfg465456465465464585fjhgo8969869ut64645354hfghfggfhghfhffr7564764567464";

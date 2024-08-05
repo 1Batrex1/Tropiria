@@ -24,6 +24,7 @@ import pl.tropiria.backend.config.security.filter.*;
 import java.util.List;
 
 import static pl.tropiria.backend.config.constants.EndpointConstant.*;
+import static pl.tropiria.backend.config.constants.SecurityConstant.JWT_HEADER;
 
 @Configuration
 @EnableWebSecurity
@@ -67,6 +68,7 @@ public class SecurityConfig {
                         config.setAllowedMethods(List.of(ALLOWED_METHODS));
                         config.setAllowCredentials(ALLOW_CREDENTIALS);
                         config.setAllowedHeaders(List.of(ALLOWED_HEADERS));
+                        config.setExposedHeaders(List.of(JWT_HEADER));
                         config.setMaxAge(MAX_AGE);
                         return config;
                     };

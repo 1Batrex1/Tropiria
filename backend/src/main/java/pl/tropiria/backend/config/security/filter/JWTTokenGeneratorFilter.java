@@ -2,10 +2,8 @@ package pl.tropiria.backend.config.security.filter;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.juli.logging.Log;
@@ -48,9 +46,7 @@ public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
                     .setIssuedAt(Date.from(Instant.now()))
                     .setExpiration(Date.from(Instant.now().plusMillis(EXPIRATION_TIME)))
                     .signWith(key).compact();
-            Cookie cookie = new Cookie(JWT_NAME, token);
-            cookie.setHttpOnly(true);
-            response.addCookie(cookie);
+            response.setHeader(JWT_HEADER, token);
         }
         filterChain.doFilter(request, response);
 
