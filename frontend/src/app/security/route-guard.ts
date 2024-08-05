@@ -1,8 +1,8 @@
 import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/router";
-import {User} from "../entities/user";
 import {Injectable} from "@angular/core";
 import {AdminService} from "../services/admin.service";
-import {SessionStorageService} from "../services/session-storage.service";
+import {BrowserStorageService} from "../services/browser-storage.service";
+import {environment} from "../../constants/environment";
 
 
 @Injectable({
@@ -10,10 +10,11 @@ import {SessionStorageService} from "../services/session-storage.service";
 })
 export class RouteGuard {
 
+  private loginPath = '/login';
 
   private validToken = false;
 
-  constructor(private router: Router, private sessionStorage: SessionStorageService, private adminService: AdminService) {
+  constructor(private router: Router,private localStorage : BrowserStorageService, private adminService: AdminService) {
 
   }
 
@@ -24,12 +25,12 @@ export class RouteGuard {
         next: (response) => {
           this.validToken = response;
           if (!this.validToken) {
-            this.router.navigate(['/login']);
+            this.router.navigate([this.loginPath]);
           }
         },
         error: (e) => {
-          this.validToken = false;
-          this.router.navigate(['/login']);
+          this.localStorage.removeItem(environment.jwtToken);
+          this.router.navigate([this.loginPath]);
 
         }
       }
