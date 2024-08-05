@@ -11,6 +11,7 @@
   top: 0;
   box-sizing: border-box;
   padding-left: 3em;
+  z-index: 999;
 }
 
 .nav img {

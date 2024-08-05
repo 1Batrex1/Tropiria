@@ -25,4 +25,10 @@ export class BrowserStorageService {
     }
   }
 
+  removeItem(key: string): void {
+    if (this.storage) {
+      this.storage.removeItem(key);
+    }
+  }
+
 }

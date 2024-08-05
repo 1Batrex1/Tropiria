@@ -4,7 +4,6 @@ import {BrowserStorageService} from "./browser-storage.service";
 import {Router} from "@angular/router";
 import {ErrorHandlerService} from './error-handler.service';
 import {Observable} from "rxjs";
-import {SessionStorageService} from "./session-storage.service";
 import {environment} from "../../constants/environment";
 
 @Injectable({
@@ -13,9 +12,12 @@ import {environment} from "../../constants/environment";
 export class AdminService {
 
 
-  constructor(private router: Router, private http: HttpClient, private sessionStorage: SessionStorageService, private errorHandler: ErrorHandlerService) {
+  constructor(private router: Router, private http: HttpClient, private localStorage: BrowserStorageService, private errorHandler: ErrorHandlerService) {
   }
 
+  private adminPath = '/admin';
+
+  private authHeader = 'Authorization';
 
   login(credentials: any) {
     const headers = new HttpHeaders(credentials ? {
@@ -25,10 +27,10 @@ export class AdminService {
     this.http.get(environment.path.login, { headers: headers, observe: 'response' }).subscribe(
       {
         next: (response) => {
-          const authHeader = response.headers.get('authorization');
+          const authHeader = response.headers.get(this.authHeader);
           if (authHeader != null) {
-            this.sessionStorage.setItem(environment.jwtToken, authHeader);
-            this.router.navigate(['/admin']);
+            this.localStorage.setItem(environment.jwtToken, authHeader);
+            this.router.navigate([this.adminPath]);
           }
         },
         error: (e) => {
