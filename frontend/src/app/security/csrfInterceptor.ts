@@ -1,7 +1,7 @@
 import {switchMap} from "rxjs";
 import {inject} from "@angular/core";
 import {AuthService} from "../services/auth.service";
-import {HttpInterceptorFn} from "@angular/common/http";
+import { HttpInterceptorFn } from "@angular/common/http";
 
 
 export const csrfInterceptor: HttpInterceptorFn = (req, next) => {
