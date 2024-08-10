@@ -22,16 +22,17 @@ public class AnimalController {
 
     private static final String SUCCESSFUL_SAVE_ANIMAL = "animal saved";
 
+    private static final String SUCCESSFUL_DELETE_ANIMAL = "animal deleted";
+
 
 
     private final AnimalService animalService;
 
     @GetMapping
-    public ResponseEntity<List<AnimalDto>> getAnimals() {
+    public ResponseEntity<Page<Animal>> getAllAnimals(Pageable pageable) {
         return ResponseEntity
                 .ok()
-                .cacheControl(CacheControl.maxAge(8, TimeUnit.HOURS))
-                .body(animalService.getAnimals());
+                .body(animalService.getAnimals(pageable));
     }
 
     @GetMapping("/for-sale")
@@ -40,6 +41,11 @@ public class AnimalController {
                 .ok()
                 .cacheControl(CacheControl.maxAge(8, TimeUnit.HOURS))
                 .body(animalService.getAnimalsForSale(pageable));
+    }
+
+    @GetMapping("/parents")
+    public ResponseEntity<List<Animal>> getParents() {
+        return ResponseEntity.ok(animalService.getParents());
     }
 
     @GetMapping("/{id}")

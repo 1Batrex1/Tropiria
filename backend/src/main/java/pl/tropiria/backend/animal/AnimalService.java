@@ -19,6 +19,7 @@ import pl.tropiria.backend.species.SpeciesService;
 import java.util.*;
 
 import static pl.tropiria.backend.config.constants.ErrorsConstant.*;
+import static pl.tropiria.backend.config.constants.PhotosConstant.*;
 
 
 @Service
@@ -30,22 +31,9 @@ public class AnimalService {
     private final SpeciesService speciesService;
     private final MorphService morphService;
 
-    public List<AnimalDto> getAnimals() {
+    public Page<Animal> getAnimals(Pageable pageable) {
         return animalRepository
-                .findAll()
-                .stream()
-                .map(animal -> AnimalDto.builder()
-                        .id(animal.getId())
-                        .name(animal.getName())
-                        .description(animal.getDescription())
-                        .sex(animal.getSex())
-                        .dateOfBirth(animal.getDateOfBirth())
-                        .species(animal.getSpecies())
-                        .morphs(animal.getMorphs())
-                        .photos(animal.getPhotos())
-                        .animalForSale(animal.getAnimalForSale())
-                        .build())
-                .toList();
+                .findAll(pageable);
     }
 
     public AnimalDto findById(long id) {
@@ -67,6 +55,9 @@ public class AnimalService {
     }
 
     public void saveAnimal(String animalJson, MultipartFile[] photos) {
+
+        checkPhotosLimit(photos);
+
         List<Photos> photosList = photosService.savePhoto(photos);
         AnimalDto animalDto = mapJsonToDto(animalJson);
         animalDto.setPhotos(photosList);
@@ -87,8 +78,7 @@ public class AnimalService {
     private AnimalDto mapJsonToDto(String animalJson) {
         try {
             return new ObjectMapper().readValue(animalJson, AnimalDto.class);
-        }
-        catch (JsonProcessingException e) {
+        } catch (JsonProcessingException e) {
             throw new IllegalFormatCodePointException(INVALID_JSON.CODE);
         }
     }
@@ -104,9 +94,7 @@ public class AnimalService {
         }
         if (!speciesService.isSpeciesExists(animalDto.getSpecies().getName())) {
             throw new IllegalFormatCodePointException(SPECIES_NOT_FOUND.CODE);
-        }
-        else
-        {
+        } else {
             animalDto.setSpecies(speciesService.getSpeciesByName(animalDto.getSpecies().getName()));
         }
 
@@ -116,9 +104,7 @@ public class AnimalService {
         for (Morph morph : animalDto.getMorphs()) {
             if (!morphService.isMorphExists(morph.getName())) {
                 throw new IllegalFormatCodePointException(MORPH_NOT_FOUND.CODE);
-            }
-            else
-            {
+            } else {
                 morphList.add(morphService.getMorphByName(morph.getName()));
             }
 
@@ -130,25 +116,30 @@ public class AnimalService {
         if (isAnimalExists(id)) {
             Optional<Animal> animal = Optional.ofNullable(animalRepository.findById(id));
             animal.ifPresent(a -> {
-                a.getPhotos()
-                        .stream()
-                        .map(photos -> PhotosDto.builder()
-                                .id(photos.getId())
-                                .photoName(photos.getPhotoName())
-                                .build())
-                        .forEach(photosDto -> {
-                            photosService.deletePhotoFromDisk(photosDto);
-                            photosService.deletePhotoNameFromDatabase(photosDto);
-                        });
+
+                if (a.getAnimalForSale() == null) {
+                    List<Animal> childAnimals = animalRepository.findAllByParent(a);
+                    childAnimals.forEach(child -> {
+                        if (child.getAnimalForSale().getParents() != null) {
+                            child.getAnimalForSale().getParents().remove(a);
+                        }
+                        animalRepository.save(child);
+                    });
+
+                }
                 animalRepository.delete(a);
+
 
             });
         }
     }
 
-    public Page<Animal> getAnimalsForSale(Pageable pagable)
-    {
+    public Page<Animal> getAnimalsForSale(Pageable pagable) {
         return animalRepository.findAllAnimalsForSale(pagable);
+    }
+
+    public List<Animal> getParents() {
+        return animalRepository.findAllParents();
     }
 
     private boolean isAnimalExists(long id) {
@@ -157,11 +148,18 @@ public class AnimalService {
 
 
     private boolean validReservationStatus(String reservationStatus) {
-        return reservationStatus.equals(ReservationConstant.RESERVED) || reservationStatus.equals(ReservationConstant.FOR_SALE);
+        return reservationStatus.equals(ReservationConstant.RESERVED)
+                || reservationStatus.equals(ReservationConstant.FOR_SALE)
+                || reservationStatus.equals(ReservationConstant.SOLD);
     }
 
-    private boolean validSex(int sex)
-    {
+    private boolean validSex(int sex) {
         return sex == SexConstant.UNKNOWN || sex == SexConstant.MALE || sex == SexConstant.FEMALE;
+    }
+
+    private void checkPhotosLimit(MultipartFile[] photosList) {
+        if (photosList.length > PHOTO_MAX_LIMIT || photosList.length < PHOTO_MIN_LIMIT) {
+            throw new IllegalFormatCodePointException(PHOTO_LIMIT_EXCEEDED.CODE);
+        }
     }
 }

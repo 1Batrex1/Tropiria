@@ -40,7 +40,7 @@ public class Animal {
     @ManyToMany
     private List<Morph> morphs;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToMany(cascade = {CascadeType.ALL},orphanRemoval = true)
     private List<Photos> photos;
 
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true,mappedBy = "animal")
