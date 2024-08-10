@@ -11,4 +11,8 @@ public class PhotosConstant {
 
     public static final String PHOTOS_DIR = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "photos";
 
+    public static final Integer PHOTO_MAX_LIMIT = 5;
+
+    public static final Integer PHOTO_MIN_LIMIT = 1;
+
 }
