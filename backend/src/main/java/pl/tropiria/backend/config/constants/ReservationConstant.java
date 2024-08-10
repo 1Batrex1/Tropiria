@@ -13,6 +13,8 @@ public class ReservationConstant {
 
     public static final String FOR_SALE = "NA SPRZEDAŻ";
     public static final String RESERVED = "ZAREZERWOWANO";
+    public static final String SOLD = "SPRZEDANO";
+
 
 
 
