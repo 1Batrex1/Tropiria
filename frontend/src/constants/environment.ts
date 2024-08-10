@@ -11,5 +11,6 @@ export const environment  = {
     photos: 'http://localhost:8080/tropiria/api/v1/photos',
     csrfToken: 'http://localhost:8080/tropiria/api/v1/csrf'
   },
-  jwtToken: 'jwt'
+  jwtToken: 'jwt',
+  csrfToken: 'csrf'
 };
