@@ -4,6 +4,7 @@ import {TerrariumFormComponent} from "./components/terrarium-form/terrarium-form
 import {AdminDashboardComponent} from "./components/admin-dashboard/admin-dashboard.component";
 import {RouteGuard} from "./security/route-guard";
 import {LoginComponent} from "./components/login/login.component";
+import {AnimalFormComponent} from "./components/admin-dashboard/animal-form/animal-form.component";
 
 export const routes: Routes = [
   {
@@ -18,6 +19,11 @@ export const routes: Routes = [
   {
     path: "admin",
     component: AdminDashboardComponent,
+    canActivate: [RouteGuard]
+  },
+  {
+    path: "admin/add-animal",
+    component: AnimalFormComponent,
     canActivate: [RouteGuard]
   }
   ,
