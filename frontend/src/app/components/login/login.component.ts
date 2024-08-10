@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {AdminService} from "../../services/admin.service";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -13,7 +13,7 @@ import {AdminService} from "../../services/admin.service";
 })
 export class LoginComponent {
 
-  constructor(private adminService: AdminService) {
+  constructor(private adminService: AuthService) {
   }
 
   loginForm = new FormGroup({

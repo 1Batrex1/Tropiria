@@ -2,17 +2,17 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BrowserStorageService} from "./browser-storage.service";
 import {Router} from "@angular/router";
-import {ErrorHandlerService} from './error-handler.service';
-import {Observable} from "rxjs";
+import {MessageHandlerService} from './message-handler.service';
+import {Observable, switchMap} from "rxjs";
 import {environment} from "../../constants/environment";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminService {
+export class AuthService {
 
 
-  constructor(private router: Router, private http: HttpClient, private localStorage: BrowserStorageService, private errorHandler: ErrorHandlerService) {
+  constructor(private router: Router, private http: HttpClient, private localStorage: BrowserStorageService, private errorHandler: MessageHandlerService) {
   }
 
   private adminPath = '/admin';
@@ -24,7 +24,7 @@ export class AdminService {
       authorization: 'Basic ' + btoa(credentials.username + ':' + credentials.password)
     } : {});
 
-    this.http.get(environment.path.login, { headers: headers, observe: 'response' }).subscribe(
+    this.http.get(environment.path.login, {headers: headers, observe: 'response'}).subscribe(
       {
         next: (response) => {
           const authHeader = response.headers.get(this.authHeader);
@@ -39,13 +39,19 @@ export class AdminService {
       }
     );
   }
+
   checkJwtToken(): Observable<boolean> {
     return this.http.get<boolean>(environment.path.checkJwtToken);
   }
 
-  getCsrftoken(): Observable<string> {
-    return this.http.get<string>(environment.path.csrfToken);
+  getCsrfToken(): Observable<CsrfToken> {
+    return this.http.get<CsrfToken>(environment.path.csrfToken)
   }
 
 
+}
+
+interface CsrfToken {
+  token: string;
+  headerName: string;
 }

@@ -1,6 +1,6 @@
 import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/router";
 import {Injectable} from "@angular/core";
-import {AdminService} from "../services/admin.service";
+import {AuthService} from "../services/auth.service";
 import {BrowserStorageService} from "../services/browser-storage.service";
 import {environment} from "../../constants/environment";
 
@@ -14,7 +14,7 @@ export class RouteGuard {
 
   private validToken = false;
 
-  constructor(private router: Router,private localStorage : BrowserStorageService, private adminService: AdminService) {
+  constructor(private router: Router,private localStorage : BrowserStorageService, private adminService: AuthService) {
 
   }
 
