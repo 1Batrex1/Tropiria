@@ -6,7 +6,7 @@ import {errorsConstant} from "../../constants/errorsConstant";
 @Injectable({
   providedIn: 'root'
 })
-export class ErrorHandlerService {
+export class MessageHandlerService {
 
   constructor(private toastr: ToastrService) {
   }
@@ -24,6 +24,14 @@ export class ErrorHandlerService {
     } else {
       this.toastr.error(errorsConstant.UNKNOWN.MESSAGE);
     }
+  }
+
+  handleInfo(message: string) {
+    this.toastr.info(message);
+  }
+
+  successInfo(message: string) {
+    this.toastr.success(message);
   }
 
 
