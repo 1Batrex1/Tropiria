@@ -16,6 +16,6 @@ export const errorsConstant = {
     MESSAGE: 'Internal server error'
   },
   UNKNOWN: {
-    MESSAGE: 'Unknown error'
+    MESSAGE: 'Something went wrong'
   }
 }
