@@ -9,7 +9,6 @@ import {provideAnimations} from "@angular/platform-browser/animations";
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {jwtInterceptor} from "./security/jwtInterceptor";
 import {csrfInterceptor} from "./security/csrfInterceptor";
-import {provideNativeDateAdapter} from "@angular/material/core";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,6 +18,6 @@ export const appConfig: ApplicationConfig = {
     provideToastr(),
     provideAnimations(),
     provideAnimationsAsync(),
-    provideNativeDateAdapter()
+
   ]
 };
