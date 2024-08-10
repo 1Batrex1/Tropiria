@@ -55,9 +55,6 @@ public class ExceptionController extends ResponseEntityExceptionHandler  {
         if (e.getCodePoint() == INVALID_RESERVATION_STATUS.CODE) {
             return ResponseEntity.badRequest().body(INVALID_RESERVATION_STATUS.MESSAGE);
         }
-        if (e.getCodePoint() == JSON_PARSE_ERROR.CODE) {
-            return ResponseEntity.internalServerError().body(JSON_PARSE_ERROR.MESSAGE);
-        }
         if (e.getCodePoint() == PARENTS_NOT_FOUND.CODE) {
             return ResponseEntity.internalServerError().body(PARENTS_NOT_FOUND.MESSAGE);
         }
@@ -71,14 +68,15 @@ public class ExceptionController extends ResponseEntityExceptionHandler  {
             return ResponseEntity.internalServerError().body(INVALID_JSON.MESSAGE);
         }
         if (e.getCodePoint() == INVALID_SEX.CODE) {
-            return ResponseEntity.internalServerError().body(INVALID_SEX.MESSAGE);
+            return ResponseEntity.badRequest().body(INVALID_SEX.MESSAGE);
         }
         if (e.getCodePoint() == FAILED_TO_LOAD_PHOTO.CODE) {
             return ResponseEntity.internalServerError().body(FAILED_TO_LOAD_PHOTO.MESSAGE);
         }
-
-
-   return ResponseEntity.badRequest().body(UNEXPECTED_ERROR);
+        if (e.getCodePoint() == PHOTO_LIMIT_EXCEEDED.CODE) {
+            return ResponseEntity.badRequest().body(PHOTO_LIMIT_EXCEEDED.MESSAGE);
+        }
+        return ResponseEntity.badRequest().body(UNEXPECTED_ERROR);
     }
 
     @ExceptionHandler(NullPointerException.class)

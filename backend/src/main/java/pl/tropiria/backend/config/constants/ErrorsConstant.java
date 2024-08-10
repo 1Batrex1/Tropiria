@@ -17,7 +17,6 @@ public enum ErrorsConstant {
     UTILITY_CLASS(9, "Utility class"),
     ANIMAL_NOT_FOUND(10, "Animal not found"),
     PARENTS_NOT_FOUND(11, "Parents not found"),
-    JSON_PARSE_ERROR(12, "Json parse error"),
     INVALID_RESERVATION_STATUS(13, "Invalid reservation status"),
     USER_NOT_FOUND(14,"User details not found"),
     INVALID_PASSWORD(15,"Invalid password"),
@@ -26,6 +25,7 @@ public enum ErrorsConstant {
     INVALID_JSON(18,"Invalid json"),
     INVALID_SEX(19,"Invalid sex"),
     FAILED_TO_LOAD_PHOTO(20,"Failed to load photo"),
+    PHOTO_LIMIT_EXCEEDED(21,"Photo limit exceeded"),
     ;
     public final int CODE;
     public final String MESSAGE;
