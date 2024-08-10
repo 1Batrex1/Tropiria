@@ -16,14 +16,11 @@ export class BrowserStorageService {
   }
 
   setItem(key: string, value: string | null): void {
-    if (this.storage) {
-      if (value === null) {
-        this.storage.removeItem(key);
-        return;
-      }
+    if (value !== null && this.storage) {
       this.storage.setItem(key, value);
     }
   }
+
 
   removeItem(key: string): void {
     if (this.storage) {
