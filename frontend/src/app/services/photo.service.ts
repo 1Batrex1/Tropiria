@@ -11,6 +11,6 @@ export class PhotoService {
   constructor(private http: HttpClient) { }
 
   getPhoto(photoName: string): Observable<Blob> {
-    return this.http.get(environment.path.photos + "/" + photoName, {responseType: 'blob', observe: 'body'});
+    return this.http.get(environment.path.photo + "/" + photoName, {responseType: 'blob', observe: 'body'});
   }
 }
