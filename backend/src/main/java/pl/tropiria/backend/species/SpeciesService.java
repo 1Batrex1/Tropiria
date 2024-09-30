@@ -25,13 +25,17 @@ public class SpeciesService {
                 .toList();
     }
 
-    public void saveSpecies(SpeciesDto speciesDto) {
+    public SpeciesDto saveSpecies(SpeciesDto speciesDto) {
         if (isSpeciesExists(speciesDto.getName())) {
             throw new IllegalFormatCodePointException(SPECIES_ALREADY_EXISTS.CODE);
         }
-        speciesRepository.save(Species.builder()
+        Species species = speciesRepository.save(Species.builder()
                 .name(speciesDto.getName())
                 .build());
+        return SpeciesDto.builder()
+                .id(species.getId())
+                .name(species.getName())
+                .build();
     }
 
     public Species getSpeciesByName(String name) {
