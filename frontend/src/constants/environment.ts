@@ -8,7 +8,7 @@ export const environment  = {
     animals: 'http://localhost:8080/tropiria/api/v1/animals',
     apiURL: 'http://localhost:8080/tropiria/api/v1',
     admin: 'http://localhost:8080/tropiria/api/v1/admin',
-    photos: 'http://localhost:8080/tropiria/api/v1/photos',
+    photo: 'http://localhost:8080/tropiria/api/v1/photo',
     csrfToken: 'http://localhost:8080/tropiria/api/v1/csrf'
   },
   jwtToken: 'jwt',
