@@ -33,10 +33,11 @@ Insert Into animal_morphs (animal_id, morphs_id) values (1, 1);
 Insert Into animal_morphs (animal_id, morphs_id) values (1, 2);
 
 
-INSERT INTO photos (photo_name) values ('placeholder-1.png'), ('placeholder-2.png'), ('placeholder-3.png'), ('placeholder-4.png');
+INSERT INTO photo (photo_name) values ('placeholder-1.png'), ('placeholder-2.png'), ('placeholder-3.png'), ('placeholder-4.png'), ('placeholder-5.png'), ('placeholder-6.png'), ('placeholder-7.png'), ('placeholder-8.png'), ('placeholder-9.png'), ('placeholder-10.png'), ('placeholder-11.png');
 
 
-INSERT INTO animal_photos (animal_id, photos_id) values (1, 1), (2, 2), (3, 3), (4, 4);
+INSERT INTO animal_photo (animal_id, photo_id) values (1, 1), (2, 2), (3, 3), (4, 4),(2,5),(3,6),(3,7),(4,8),(4,9),(4,10),(4,11);
+
 
 
 INSERT INTO animal_for_sale (animal_id, price,reservation_status) values (2, 100, 'ZAREZEWOWANO');
