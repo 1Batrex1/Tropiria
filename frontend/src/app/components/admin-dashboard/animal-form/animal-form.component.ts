@@ -17,10 +17,16 @@ import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatInput} from "@angular/material/input";
 import {MatTextColumn} from "@angular/material/table";
-import {NgForOf, NgIf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {CdkDrag, CdkDragHandle, CdkDropList} from "@angular/cdk/drag-drop";
 import {MatCard} from "@angular/material/card";
 import {CdkTextareaAutosize} from "@angular/cdk/text-field";
+import {SexPipe} from "../../../pipe/sex.pipe";
+import {MorphPipe} from "../../../pipe/morph.pipe";
+import {ParentPipe} from "../../../pipe/parent.pipe";
+import moment from "moment";
+import {Router, RouterLink} from "@angular/router";
+import {reservationStatus} from "../../../../constants/reservationConstant";
 
 @Component({
   selector: 'app-animal-form',
@@ -54,6 +60,12 @@ import {CdkTextareaAutosize} from "@angular/cdk/text-field";
     NgIf,
     MatCard,
     CdkTextareaAutosize,
+    DatePipe,
+    SexPipe,
+    MorphPipe,
+    NgOptimizedImage,
+    ParentPipe,
+    RouterLink,
   ],
   templateUrl: './animal-form.component.html',
   styleUrl: './animal-form.component.css'
@@ -72,14 +84,11 @@ export class AnimalFormComponent {
     male: 1,
     female: 2
   }
-  avalibleReservationStatus = {
-    for_sale: "NA SPRZEDAŻ",
-    reserved: "ZAREZERWOWANO",
-    sold: "SPRZEDANO"
-  }
 
 
-  constructor(private animalService: AnimalService,
+
+  constructor(private router: Router,
+              private animalService: AnimalService,
               private speciesService: SpeciesService,
               private morphService: MorphService,
               private fb: FormBuilder,
@@ -97,17 +106,17 @@ export class AnimalFormComponent {
       sex: [0, Validators.required],
       dateOfBirth: [new Date(), Validators.required],
       species: ['', Validators.required],
-      morphs: ['', Validators.required]
+      morphs: [[], Validators.required]
     });
 
     this.animalFormThirdGroup = this.fb.group({
-      photos: this.fb.array([]),
+      photoList: this.fb.array([], Validators.required),
     });
     this.animalFormFourthGroup = this.fb.group({
       isForSale: [false, Validators.required],
-      parents: ['', Validators.required],
+      parents: [],
       price: [0, Validators.required],
-      reservationStatus: [this.avalibleReservationStatus.for_sale, Validators.required]
+      reservationStatus: [reservationStatus.for_sale, Validators.required]
     });
   }
 
@@ -116,15 +125,13 @@ export class AnimalFormComponent {
     return this.animalFormFourthGroup.get('isForSale')?.value;
   }
 
-  get photos(): FormArray {
-    return this.animalFormThirdGroup.get('photos') as FormArray;
+  get photoList(): FormArray {
+    return this.animalFormThirdGroup.get('photoList') as FormArray;
   }
 
   get parents() {
     return this.animalFormFourthGroup.get('parents') as FormArray;
   }
-
-
 
 
   getSpecies() {
@@ -155,13 +162,13 @@ export class AnimalFormComponent {
   }
 
   removePhoto(index: number): void {
-    this.photos.removeAt(index);
+    this.photoList.removeAt(index);
   }
 
   onFileSelect(event: any): void {
     const files = event.target.files;
     if (files?.length) {
-      const remainingSlots = 5 - this.photos.length;
+      const remainingSlots = 5 - this.photoList.length;
       const filesToAdd = Array.from(files).slice(0, remainingSlots) as File[];
       this.addFilesToFormArray(filesToAdd);
     }
@@ -174,7 +181,7 @@ export class AnimalFormComponent {
 
     const files = event.dataTransfer?.files;
     if (files?.length) {
-      const remainingSlots = 5 - this.photos.length;
+      const remainingSlots = 5 - this.photoList.length;
       const filesToAdd = Array.from(files).slice(0, remainingSlots);
       this.addFilesToFormArray(filesToAdd);
     }
@@ -191,10 +198,34 @@ export class AnimalFormComponent {
   }
 
   submit() {
-    console.log(this.animalFormFirstGroup.value);
-    console.log(this.animalFormSecondGroup.value);
-    console.log(this.animalFormThirdGroup.value);
-    console.log(this.animalFormFourthGroup.value);
+    let animal = new Animal();
+    animal.name = this.animalFormFirstGroup.get('name')?.value;
+    animal.description = this.animalFormFirstGroup.get('description')?.value;
+    animal.sex = this.animalFormSecondGroup.get('sex')?.value;
+    animal.dateOfBirth = moment(this.animalFormSecondGroup.get('dateOfBirth')?.value).format('DD-MM-YYYY');
+    animal.species = this.animalFormSecondGroup.get('species')?.value;
+    animal.morphs = this.animalFormSecondGroup.get('morphs')?.value;
+    animal.photoList = [];
+    if (this.isForSale)
+      animal.animalForSale = {
+        price: this.animalFormFourthGroup.get('price')?.value,
+        reservationStatus: this.animalFormFourthGroup.get('reservationStatus')?.value,
+        parents: this.parents.value
+      }
+    let photos: File[] = this.photoList.controls.map(control => control.get('file')?.value);
+    let formData = new FormData();
+    formData.append('animal', JSON.stringify(animal));
+    photos.forEach(photo => formData.append('photoList', photo));
+
+    this.animalService.addAnimal(formData).subscribe(
+      {
+        next: () => {
+          this.messageHandler.successInfo("Dodano zwierzę")
+          this.router.navigate(['/admin'])
+        },
+        error: e => this.messageHandler.handleHttpError(e)
+      }
+    );
   }
 
   onSelectionChange(event: MatSelectChange) {
@@ -205,10 +236,10 @@ export class AnimalFormComponent {
 
 
   addFilesToFormArray(files: File[]): void {
-    files.slice(0, 5 - this.photos.length).forEach(file => {
+    files.slice(0, 5 - this.photoList.length).forEach(file => {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.photos.push(this.fb.group({
+        this.photoList.push(this.fb.group({
           file: file,
           url: e.target.result
         }));
@@ -216,5 +247,5 @@ export class AnimalFormComponent {
       reader.readAsDataURL(file);
     });
   }
-
+  protected readonly reservationStatus = reservationStatus;
 }

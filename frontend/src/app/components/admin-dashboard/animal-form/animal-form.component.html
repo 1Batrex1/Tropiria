@@ -1,10 +1,10 @@
 <div class="container">
-  <mat-stepper orientation="vertical" #stepper>
+  <mat-stepper orientation="vertical" #stepper linear="true">
     <mat-step [stepControl]="animalFormFirstGroup">
       <form [formGroup]="animalFormFirstGroup" class="firstGroup">
         <ng-template matStepLabel>Imię i opis</ng-template>
         <mat-form-field>
-          <input matInput placeholder="Imię" formControlName="name" [required]="true">
+          <input matInput placeholder="Imię" formControlName="name">
         </mat-form-field>
 
         <mat-form-field>
@@ -19,7 +19,7 @@
         </mat-form-field>
       </form>
 
-      <div>
+      <div class="buttonFormContainer">
         <button mat-raised-button color="primary" matStepperNext enterkeyhint="">Dalej</button>
       </div>
     </mat-step>
@@ -46,18 +46,22 @@
         <mat-form-field>
           <mat-label>Gatunek</mat-label>
           <mat-select placeholder="Gatunek" formControlName="species" required>
-            <mat-option *ngFor="let species of avalibleSpecies" [value]="species">{{ species.name }}</mat-option>
+            @for (species of avalibleSpecies; track $index) {
+              <mat-option [value]="species">{{ species.name }}</mat-option>
+            }
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
           <mat-label>Umaszczenie</mat-label>
           <mat-select formControlName="morphs" multiple>
-            <mat-option *ngFor="let morph of avalibleMorphs" [value]="morph">{{ morph.name }}</mat-option>
+            @for (morph of avalibleMorphs; track $index) {
+              <mat-option [value]="morph">{{ morph.name }}</mat-option>
+            }
           </mat-select>
         </mat-form-field>
 
-        <div>
+        <div class="buttonFormContainer">
           <button mat-raised-button color="primary" matStepperPrevious>Wstecz</button>
           <button mat-raised-button color="primary" matStepperNext>Dalej</button>
         </div>
@@ -69,26 +73,34 @@
         <ng-template matStepLabel>Zdjęcia</ng-template>
 
         <div class="photo-container">
-          <mat-card *ngFor="let photo of photos.controls; let i = index" class="photo-card">
-            <img [src]="photo.value.url" alt="Photo" class="photo-preview"/>
-            <button mat-icon-button (click)="removePhoto(i)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </mat-card>
+          @for (photo of photoList.controls; track $index) {
+            <mat-card class="photo-card">
+              <img [src]="photo.value.url" alt="Photo" class="photo-preview"/>
+              <button mat-icon-button (click)="removePhoto($index)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-card>
+          }
 
-          <input #fileInput type="file" (change)="onFileSelect($event)" hidden accept="image/png, image/jpeg, image/jpg"
+          <input #fileInput type="file"
+                 (change)="onFileSelect($event)"
+                 hidden accept="image/png, image/jpeg, image/jpg"
                  multiple/>
-
-          <div *ngIf="photos.length < 5" class="drop-zone"
-               (click)="fileInput.click()"
-               (drop)="onDrop($event)"
-               (dragover)="onDragOver($event)"
-               (dragleave)="onDragLeave($event)">
-            <mat-icon>cloud_upload</mat-icon>
-            <p>Przeciągnij zdjęcia lub kliknij tutaj</p>
-          </div>
+          @if (photoList.length < 5) {
+            <div class="drop-zone"
+                 (click)="fileInput.click()"
+                 (drop)="onDrop($event)"
+                 (dragover)="onDragOver($event)"
+                 (dragleave)="onDragLeave($event)">
+              <mat-icon>cloud_upload</mat-icon>
+              <p>Przeciągnij zdjęcia lub kliknij tutaj</p>
+            </div>
+          }
         </div>
-
+        <div class="buttonFormContainer">
+          <button mat-raised-button color="primary" matStepperPrevious>Wstecz</button>
+          <button mat-raised-button color="primary" matStepperNext>Dalej</button>
+        </div>
       </form>
 
     </mat-step>
@@ -97,13 +109,13 @@
       <form [formGroup]="animalFormFourthGroup" class="fourthGroup">
         <ng-template matStepLabel>Informacje sprzedażowe</ng-template>
         <mat-checkbox formControlName="isForSale">Na sprzedaż</mat-checkbox>
-        <div *ngIf="isForSale" class="forSaleContainer">
+        @if (isForSale) {
           <mat-form-field>
             <mat-label>Status rezerwacji</mat-label>
             <mat-select formControlName="reservationStatus" placeholder="Status rezerwacji">
-              <mat-option [value]="avalibleReservationStatus.for_sale">Dostępny</mat-option>
-              <mat-option [value]="avalibleReservationStatus.reserved">Zarezerwowany</mat-option>
-              <mat-option [value]="avalibleReservationStatus.sold">Sprzedany</mat-option>
+              <mat-option [value]="reservationStatus.for_sale">Dostępny</mat-option>
+              <mat-option [value]="reservationStatus.reserved">Zarezerwowany</mat-option>
+              <mat-option [value]="reservationStatus.sold">Sprzedany</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field>
@@ -113,13 +125,15 @@
           <mat-form-field>
             <mat-label>Rodzice</mat-label>
             <mat-select formControlName="parents" multiple (selectionChange)="onSelectionChange($event)">
-              <mat-option *ngFor="let parent of avalibleParents" [value]="parent">{{ parent.name }}</mat-option>
+              @for (parent of avalibleParents; track $index) {
+                <mat-option [value]="parent">{{ parent.name }}</mat-option>
+              }
             </mat-select>
           </mat-form-field>
-        </div>
+        }
       </form>
 
-      <div>
+      <div class="buttonFormContainer">
         <button mat-raised-button color="primary" matStepperPrevious>Wstecz</button>
         <button mat-raised-button color="primary" matStepperNext>Dalej</button>
       </div>
@@ -139,13 +153,53 @@
         </div>
         <div class="summary-item">
           <h3>Data urodzenia</h3>
-          <p>{{ animalFormSecondGroup.value["dateOfBirth"] }}</p>
+          <p>{{ animalFormSecondGroup.value["dateOfBirth"] | date:"dd/LL/YYYY" }}</p>
+        </div>
+        <div class="summary-item">
+          <h3>Płeć</h3>
+          <p>{{ animalFormSecondGroup.value["sex"] | sex }}</p>
+        </div>
+        <div class="summary-item">
+          <h3>Gatunek</h3>
+          <p>{{ animalFormSecondGroup.value["species"].name }}</p>
+        </div>
+        <div class="summary-item">
+          <h3>Umaszczenie</h3>
+          <p>{{ animalFormSecondGroup.value["morphs"] | morph }}</p>
+        </div>
+        <div class="summary-item">
+          <h3>Zdjęcia</h3>
+          <div class="photoList-summary">
+            @for (photo of photoList.controls; track $index) {
+              <img [src]="photo.value.url" alt="Photo" class="photo-preview"/>
+            }
+          </div>
+        </div>
+        <div class="summary-item">
+          <h3>Na sprzedaż</h3>
+          <p>{{ animalFormFourthGroup.value["isForSale"] ? "Tak" : "Nie" }}</p>
+        </div>
+        @if (isForSale) {
+          <div class="summary-item">
+            <h3>Status rezerwacji</h3>
+            <p>{{ animalFormFourthGroup.value["reservationStatus"] }}</p>
+          </div>
+          <div class="summary-item">
+            <h3>Cena</h3>
+            <p>{{ animalFormFourthGroup.value["price"] }}</p>
+          </div>
+          <div class="summary-item">
+            <h3>Rodzice</h3>
+            <p>{{ animalFormFourthGroup.value["parents"] | parent }}</p>
+          </div>
+        }
+        <div class="buttonFormContainer">
+          <button mat-raised-button color="primary" (click)="submit()">Dodaj</button>
         </div>
       </div>
-      <div>
-        <button mat-raised-button color="primary" (click)="submit()">Dodaj</button>
-      </div>
     </mat-step>
-
   </mat-stepper>
+  <div class="buttonContainer">
+    <button mat-raised-button color="primary" [routerLink]="'/admin'">Wróc</button>
+  </div>
 </div>
