@@ -6,7 +6,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Range;
 import pl.tropiria.backend.animal.forsale.AnimalForSale;
 import pl.tropiria.backend.morph.Morph;
-import pl.tropiria.backend.photos.Photos;
+import pl.tropiria.backend.photo.Photo;
 import pl.tropiria.backend.species.Species;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
 @Table(name = "animal")
 public class Animal {
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Nullable
@@ -40,9 +40,14 @@ public class Animal {
     @ManyToMany
     private List<Morph> morphs;
 
-    @OneToMany(cascade = {CascadeType.ALL},orphanRemoval = true)
-    private List<Photos> photos;
+    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @JoinTable(
+            name = "animal_photo",
+            joinColumns = @JoinColumn(name = "animal_id"),
+            inverseJoinColumns = @JoinColumn(name = "photo_id")
+    )
+    private List<Photo> photoList;
 
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true,mappedBy = "animal")
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "animal")
     private AnimalForSale animalForSale;
 }
