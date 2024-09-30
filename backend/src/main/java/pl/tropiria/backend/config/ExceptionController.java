@@ -19,57 +19,67 @@ public class ExceptionController extends ResponseEntityExceptionHandler  {
 
     @ExceptionHandler(IllegalFormatCodePointException.class)
     protected ResponseEntity<String> handleIllegalFormatCodePointException(IllegalFormatCodePointException e) {
-        if (e.getCodePoint() == NO_ALGORITHM.getCode()) {
-            return ResponseEntity.internalServerError().body(NO_ALGORITHM.getMessage());
+        if (e.getCodePoint() == NO_ALGORITHM.CODE) {
+            return ResponseEntity.internalServerError().body(NO_ALGORITHM.MESSAGE);
         }
-        if (e.getCodePoint() == SPECIES_ALREADY_EXISTS.getCode()) {
-            return ResponseEntity.internalServerError().body(SPECIES_ALREADY_EXISTS.getMessage());
+        if (e.getCodePoint() == SPECIES_ALREADY_EXISTS.CODE) {
+            return ResponseEntity.internalServerError().body(SPECIES_ALREADY_EXISTS.MESSAGE);
         }
-        if (e.getCodePoint() == SPECIES_NOT_FOUND.getCode()) {
-            return ResponseEntity.internalServerError().body(SPECIES_NOT_FOUND.getMessage());
+        if (e.getCodePoint() == SPECIES_NOT_FOUND.CODE) {
+            return ResponseEntity.internalServerError().body(SPECIES_NOT_FOUND.MESSAGE);
         }
-        if (e.getCodePoint() == MORPH_ALREADY_EXISTS.getCode()) {
-            return ResponseEntity.internalServerError().body(MORPH_ALREADY_EXISTS.getMessage());
+        if (e.getCodePoint() == MORPH_ALREADY_EXISTS.CODE) {
+            return ResponseEntity.internalServerError().body(MORPH_ALREADY_EXISTS.MESSAGE);
         }
-        if (e.getCodePoint() == MORPH_NOT_FOUND.getCode()) {
-            return ResponseEntity.internalServerError().body(MORPH_NOT_FOUND.getMessage());
+        if (e.getCodePoint() == MORPH_NOT_FOUND.CODE) {
+            return ResponseEntity.internalServerError().body(MORPH_NOT_FOUND.MESSAGE);
         }
-        if (e.getCodePoint() == PHOTO_ALREADY_EXISTS.getCode()) {
-            return ResponseEntity.internalServerError().body(PHOTO_ALREADY_EXISTS.getMessage());
+        if (e.getCodePoint() == PHOTO_ALREADY_EXISTS.CODE) {
+            return ResponseEntity.internalServerError().body(PHOTO_ALREADY_EXISTS.MESSAGE);
         }
-        if (e.getCodePoint() == CORRUPTED_PHOTO_FILE.getCode()) {
-            return ResponseEntity.internalServerError().body(CORRUPTED_PHOTO_FILE.getMessage());
+        if (e.getCodePoint() == CORRUPTED_PHOTO_FILE.CODE) {
+            return ResponseEntity.internalServerError().body(CORRUPTED_PHOTO_FILE.MESSAGE);
         }
-        if (e.getCodePoint() == FAIL_TO_SAVE_PHOTO_ON_DISK.getCode()) {
-            return ResponseEntity.internalServerError().body(FAIL_TO_SAVE_PHOTO_ON_DISK.getMessage());
+        if (e.getCodePoint() == FAIL_TO_SAVE_PHOTO_ON_DISK.CODE) {
+            return ResponseEntity.internalServerError().body(FAIL_TO_SAVE_PHOTO_ON_DISK.MESSAGE);
         }
-        if (e.getCodePoint() == ANIMAL_NOT_FOUND.getCode()) {
-            return ResponseEntity.internalServerError().body(ANIMAL_NOT_FOUND.getMessage());
+        if (e.getCodePoint() == ANIMAL_NOT_FOUND.CODE) {
+            return ResponseEntity.internalServerError().body(ANIMAL_NOT_FOUND.MESSAGE);
         }
-        if (e.getCodePoint() == MORPH_NOT_FOUND.getCode()) {
-            return ResponseEntity.internalServerError().body(MORPH_NOT_FOUND.getMessage());
+        if (e.getCodePoint() == ANIMAL_NOT_FOR_SALE.CODE) {
+            return ResponseEntity.internalServerError().body(ANIMAL_NOT_FOR_SALE.MESSAGE);
         }
-        if (e.getCodePoint() == FAIL_TO_SAVE_PHOTO_ON_DISK.getCode()) {
-            return ResponseEntity.internalServerError().body(FAIL_TO_SAVE_PHOTO_PATH_TO_DATABASE.getMessage());
+        if (e.getCodePoint() == MORPH_NOT_FOUND.CODE) {
+            return ResponseEntity.internalServerError().body(MORPH_NOT_FOUND.MESSAGE);
         }
-        if (e.getCodePoint() == INVALID_RESERVATION_STATUS.getCode()) {
-            return ResponseEntity.badRequest().body(INVALID_RESERVATION_STATUS.getMessage());
+        if (e.getCodePoint() == FAIL_TO_SAVE_PHOTO_ON_DISK.CODE) {
+            return ResponseEntity.internalServerError().body(FAIL_TO_SAVE_PHOTO_PATH_TO_DATABASE.MESSAGE);
         }
-        if (e.getCodePoint() == JSON_PARSE_ERROR.getCode()) {
-            return ResponseEntity.internalServerError().body(JSON_PARSE_ERROR.getMessage());
+        if (e.getCodePoint() == INVALID_RESERVATION_STATUS.CODE) {
+            return ResponseEntity.badRequest().body(INVALID_RESERVATION_STATUS.MESSAGE);
         }
-        if (e.getCodePoint() == PARENTS_NOT_FOUND.getCode()) {
-            return ResponseEntity.internalServerError().body(PARENTS_NOT_FOUND.getMessage());
+        if (e.getCodePoint() == PARENTS_NOT_FOUND.CODE) {
+            return ResponseEntity.internalServerError().body(PARENTS_NOT_FOUND.MESSAGE);
         }
-        if (e.getCodePoint() == INVALID_PASSWORD.getCode()) {
-            return ResponseEntity.internalServerError().body(INVALID_PASSWORD.getMessage());
+        if (e.getCodePoint() == INVALID_PASSWORD.CODE) {
+            return ResponseEntity.internalServerError().body(INVALID_PASSWORD.MESSAGE);
         }
-        if (e.getCodePoint() == INVALID_TOKEN.getCode()) {
-            return ResponseEntity.internalServerError().body(INVALID_TOKEN.getMessage());
+        if (e.getCodePoint() == INVALID_TOKEN.CODE) {
+            return ResponseEntity.internalServerError().body(INVALID_TOKEN.MESSAGE);
         }
-
-
-    return ResponseEntity.badRequest().body(UNEXPECTED_ERROR);
+        if (e.getCodePoint() == INVALID_JSON.CODE) {
+            return ResponseEntity.internalServerError().body(INVALID_JSON.MESSAGE);
+        }
+        if (e.getCodePoint() == INVALID_SEX.CODE) {
+            return ResponseEntity.badRequest().body(INVALID_SEX.MESSAGE);
+        }
+        if (e.getCodePoint() == FAILED_TO_LOAD_PHOTO.CODE) {
+            return ResponseEntity.internalServerError().body(FAILED_TO_LOAD_PHOTO.MESSAGE);
+        }
+        if (e.getCodePoint() == PHOTO_LIMIT_EXCEEDED.CODE) {
+            return ResponseEntity.badRequest().body(PHOTO_LIMIT_EXCEEDED.MESSAGE);
+        }
+        return ResponseEntity.badRequest().body(UNEXPECTED_ERROR);
     }
 
     @ExceptionHandler(NullPointerException.class)

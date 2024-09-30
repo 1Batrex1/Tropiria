@@ -16,7 +16,7 @@ public class SHAEncoder {
     private static StringBuilder hexString;
 
     private SHAEncoder() {
-        throw new IllegalFormatCodePointException(UTILITY_CLASS.getCode());
+        throw new IllegalFormatCodePointException(UTILITY_CLASS.CODE);
     }
 
     public static String encode(MultipartFile photo) {
@@ -29,9 +29,9 @@ public class SHAEncoder {
 
     private static void setMessageDigest(){
         try {
-            messageDigest = MessageDigest.getInstance(SHA3_512.getAlgorithm());
+            messageDigest = MessageDigest.getInstance(SHA3_512.ALGORITHM);
         } catch (NoSuchAlgorithmException e) {
-            throw new IllegalFormatCodePointException(NO_ALGORITHM.getCode());
+            throw new IllegalFormatCodePointException(NO_ALGORITHM.CODE);
         }
     }
 
@@ -40,7 +40,7 @@ public class SHAEncoder {
             hash = messageDigest.digest(photo.getOriginalFilename().getBytes());
         }
         catch (NullPointerException e){
-            throw new IllegalFormatCodePointException(CORRUPTED_PHOTO_FILE.getCode());
+            throw new IllegalFormatCodePointException(CORRUPTED_PHOTO_FILE.CODE);
         }
     }
     private static void setHexString() {
@@ -51,7 +51,7 @@ public class SHAEncoder {
             if (hex.length() == 1) hexString.append('0');
             hexString.append(hex);
         }
-        hexString.append(SHA3_512.getExtension());
+        hexString.append(SHA3_512.EXTENSION);
 
     }
 

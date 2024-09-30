@@ -3,7 +3,6 @@ package pl.tropiria.backend.config.constants;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Getter
 @AllArgsConstructor
 public enum ErrorsConstant {
     SPECIES_ALREADY_EXISTS(0, "Species already exists"),
@@ -13,19 +12,24 @@ public enum ErrorsConstant {
     PHOTO_ALREADY_EXISTS(4, "Photo already exists"),
     FAIL_TO_SAVE_PHOTO_ON_DISK(5, "Failed to save photo on disk"),
     FAIL_TO_SAVE_PHOTO_PATH_TO_DATABASE(6, "Failed to save photo path to database"),
+    FAIL_TO_DELETE_PHOTO(17, "Failed to delete photo"),
+    FAILED_TO_LOAD_PHOTO(20, "Failed to load photo"),
+    PHOTO_LIMIT_EXCEEDED(21, "Photo limit exceeded"),
     CORRUPTED_PHOTO_FILE(7, "Corrupted photo file"),
+
     NO_ALGORITHM(8, "No such algorithm"),
     UTILITY_CLASS(9, "Utility class"),
     ANIMAL_NOT_FOUND(10, "Animal not found"),
+    ANIMAL_NOT_FOR_SALE(12, "Animal not for sale"),
     PARENTS_NOT_FOUND(11, "Parents not found"),
-    JSON_PARSE_ERROR(12, "Json parse error"),
     INVALID_RESERVATION_STATUS(13, "Invalid reservation status"),
-    USER_NOT_FOUND(14,"User details not found"),
-    INVALID_PASSWORD(15,"Invalid password"),
-    INVALID_TOKEN(16,"Invalid token"),
-    FAIL_TO_DELETE_PHOTO(17,"Failed to delete photo"),
+    USER_NOT_FOUND(14, "User details not found"),
+    INVALID_PASSWORD(15, "Invalid password"),
+    INVALID_TOKEN(16, "Invalid token"),
+    INVALID_JSON(18, "Invalid json"),
+    INVALID_SEX(19, "Invalid sex"),
     ;
-    private final int code;
-    private final String message;
+    public final int CODE;
+    public final String MESSAGE;
 }
 

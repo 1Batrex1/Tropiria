@@ -25,13 +25,17 @@ public class SpeciesService {
                 .toList();
     }
 
-    public void saveSpecies(SpeciesDto speciesDto) {
+    public SpeciesDto saveSpecies(SpeciesDto speciesDto) {
         if (isSpeciesExists(speciesDto.getName())) {
-            throw new IllegalFormatCodePointException(SPECIES_ALREADY_EXISTS.getCode());
+            throw new IllegalFormatCodePointException(SPECIES_ALREADY_EXISTS.CODE);
         }
-        speciesRepository.save(Species.builder()
+        Species species = speciesRepository.save(Species.builder()
                 .name(speciesDto.getName())
                 .build());
+        return SpeciesDto.builder()
+                .id(species.getId())
+                .name(species.getName())
+                .build();
     }
 
     public Species getSpeciesByName(String name) {
@@ -46,7 +50,7 @@ public class SpeciesService {
 
     public SpeciesDto updateSpecies(Long id, SpeciesDto speciesDto) {
         Species species = speciesRepository.findById(id)
-                .orElseThrow(() -> new IllegalFormatCodePointException(SPECIES_NOT_FOUND.getCode()));
+                .orElseThrow(() -> new IllegalFormatCodePointException(SPECIES_NOT_FOUND.CODE));
         species.setName(speciesDto.getName());
         speciesRepository.save(species);
         return SpeciesDto.builder()
@@ -57,7 +61,7 @@ public class SpeciesService {
 
     public void deleteSpecies(Long id) {
         Species species = speciesRepository.findById(id)
-                .orElseThrow(() -> new IllegalFormatCodePointException(SPECIES_NOT_FOUND.getCode()));
+                .orElseThrow(() -> new IllegalFormatCodePointException(SPECIES_NOT_FOUND.CODE));
         speciesRepository.delete(species);
     }
 }

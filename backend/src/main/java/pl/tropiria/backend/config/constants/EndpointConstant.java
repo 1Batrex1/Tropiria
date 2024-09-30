@@ -6,7 +6,7 @@ import java.util.IllegalFormatCodePointException;
 public class EndpointConstant {
 
     private EndpointConstant() {
-        throw new IllegalFormatCodePointException(ErrorsConstant.UTILITY_CLASS.getCode());
+        throw new IllegalFormatCodePointException(ErrorsConstant.UTILITY_CLASS.CODE);
     }
 
 
@@ -14,10 +14,14 @@ public class EndpointConstant {
 
     public static final String MORPH = "/morph";
 
-    public static final String PHOTOS = "/photos";
+    public static final String PHOTO = "/photo";
 
     public static final String ANIMALS = "/animals";
 
     public static final String LOGIN = "/login";
+
+    public static final String CSRF = "/csrf";
+
+    public static final String JWT = "/jwt";
 
 }

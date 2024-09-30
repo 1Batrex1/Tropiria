@@ -1,0 +1,23 @@
+<div class="container">
+
+  <app-photo class="mainPhoto" [photoName]="mainPhoto"></app-photo>
+  <div class="description">
+    <h1>{{animal?.name}} {{animal?.morphs | morph}} {{animal?.animalForSale?.price}} zł</h1>
+  </div>
+
+  <div class="buttonContainer">
+    <button mat-raised-button color="primary">ZAREZERWUJ</button>
+  </div>
+
+  <div *ngIf="otherPhotos.length > 0" class="gallery" [ngClass]="
+  {'one' : otherPhotos.length === 1,
+  'two': otherPhotos.length === 2,
+  'three': otherPhotos.length === 3,
+  'four': otherPhotos.length === 4}">
+    <div *ngFor="let photo of otherPhotos">
+      <app-photo [photoName]="photo"></app-photo>
+    </div>
+  </div>
+
+
+</div>

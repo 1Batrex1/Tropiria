@@ -33,7 +33,7 @@ public class TropiriaUserDetails implements UserDetailsService {
         List<Account> account = accountRepository.findByLoginAndActive(username);
         if (account.isEmpty())
         {
-            throw new UsernameNotFoundException(USER_NOT_FOUND.getMessage());
+            throw new UsernameNotFoundException(USER_NOT_FOUND.MESSAGE);
         }
         return setUpUser(account.getFirst());
 

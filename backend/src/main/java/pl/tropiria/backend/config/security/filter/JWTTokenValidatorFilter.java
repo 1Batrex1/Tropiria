@@ -45,7 +45,7 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
             catch (Exception e) {
-                throw new BadCredentialsException(INVALID_TOKEN.getMessage());
+                throw new BadCredentialsException(INVALID_TOKEN.MESSAGE);
             }
 
 
@@ -55,7 +55,6 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        logger.info("Request path: " + request.getServletPath());
         return request.getServletPath().equals(LOGIN);
     }
 }

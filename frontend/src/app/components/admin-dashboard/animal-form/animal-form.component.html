@@ -1,0 +1,205 @@
+<div class="container">
+  <mat-stepper orientation="vertical" #stepper linear="true">
+    <mat-step [stepControl]="animalFormFirstGroup">
+      <form [formGroup]="animalFormFirstGroup" class="firstGroup">
+        <ng-template matStepLabel>Imię i opis</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Imię" formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field>
+          <textarea
+            matInput
+            placeholder="Opis"
+            formControlName="description"
+            cdkTextareaAutosize
+            cdkAutosizeMaxRows="5"
+            cdkAutosizeMinRows="5"
+          >></textarea>
+        </mat-form-field>
+      </form>
+
+      <div class="buttonFormContainer">
+        <button mat-raised-button color="primary" matStepperNext enterkeyhint="">Dalej</button>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="animalFormSecondGroup">
+      <form [formGroup]="animalFormSecondGroup" class="secondGroup">
+        <ng-template matStepLabel>Płeć wiek gatunek i umaszczenie</ng-template>
+        <mat-form-field>
+          <mat-label>Data Urodzenia</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Płeć</mat-label>
+          <mat-select formControlName="sex" placeholder="Płeć">
+            <mat-option [value]="avalibleSex.unknown">Nieznana</mat-option>
+            <mat-option [value]="avalibleSex.male">Samiec</mat-option>
+            <mat-option [value]="avalibleSex.female">Samica</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Gatunek</mat-label>
+          <mat-select placeholder="Gatunek" formControlName="species" required>
+            @for (species of avalibleSpecies; track $index) {
+              <mat-option [value]="species">{{ species.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Umaszczenie</mat-label>
+          <mat-select formControlName="morphs" multiple>
+            @for (morph of avalibleMorphs; track $index) {
+              <mat-option [value]="morph">{{ morph.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <div class="buttonFormContainer">
+          <button mat-raised-button color="primary" matStepperPrevious>Wstecz</button>
+          <button mat-raised-button color="primary" matStepperNext>Dalej</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="animalFormThirdGroup">
+      <form [formGroup]="animalFormThirdGroup" class="thirdGroup">
+        <ng-template matStepLabel>Zdjęcia</ng-template>
+
+        <div class="photo-container">
+          @for (photo of photoList.controls; track $index) {
+            <mat-card class="photo-card">
+              <img [src]="photo.value.url" alt="Photo" class="photo-preview"/>
+              <button mat-icon-button (click)="removePhoto($index)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-card>
+          }
+
+          <input #fileInput type="file"
+                 (change)="onFileSelect($event)"
+                 hidden accept="image/png, image/jpeg, image/jpg"
+                 multiple/>
+          @if (photoList.length < 5) {
+            <div class="drop-zone"
+                 (click)="fileInput.click()"
+                 (drop)="onDrop($event)"
+                 (dragover)="onDragOver($event)"
+                 (dragleave)="onDragLeave($event)">
+              <mat-icon>cloud_upload</mat-icon>
+              <p>Przeciągnij zdjęcia lub kliknij tutaj</p>
+            </div>
+          }
+        </div>
+        <div class="buttonFormContainer">
+          <button mat-raised-button color="primary" matStepperPrevious>Wstecz</button>
+          <button mat-raised-button color="primary" matStepperNext>Dalej</button>
+        </div>
+      </form>
+
+    </mat-step>
+
+    <mat-step [stepControl]="animalFormFourthGroup">
+      <form [formGroup]="animalFormFourthGroup" class="fourthGroup">
+        <ng-template matStepLabel>Informacje sprzedażowe</ng-template>
+        <mat-checkbox formControlName="isForSale">Na sprzedaż</mat-checkbox>
+        @if (isForSale) {
+          <mat-form-field>
+            <mat-label>Status rezerwacji</mat-label>
+            <mat-select formControlName="reservationStatus" placeholder="Status rezerwacji">
+              <mat-option [value]="reservationStatus.for_sale">Dostępny</mat-option>
+              <mat-option [value]="reservationStatus.reserved">Zarezerwowany</mat-option>
+              <mat-option [value]="reservationStatus.sold">Sprzedany</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Cena</mat-label>
+            <input matInput placeholder="Cena" formControlName="price">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Rodzice</mat-label>
+            <mat-select formControlName="parents" multiple (selectionChange)="onSelectionChange($event)">
+              @for (parent of avalibleParents; track $index) {
+                <mat-option [value]="parent">{{ parent.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        }
+      </form>
+
+      <div class="buttonFormContainer">
+        <button mat-raised-button color="primary" matStepperPrevious>Wstecz</button>
+        <button mat-raised-button color="primary" matStepperNext>Dalej</button>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Podsumowanie</ng-template>
+
+      <div class="summary">
+        <div class="summary-item">
+          <h3>Imię</h3>
+          <p>{{ animalFormFirstGroup.value.name }}</p>
+        </div>
+        <div class="summary-item">
+          <h3>Opis</h3>
+          <p>{{ animalFormFirstGroup.value.description }}</p>
+        </div>
+        <div class="summary-item">
+          <h3>Data urodzenia</h3>
+          <p>{{ animalFormSecondGroup.value["dateOfBirth"] | date:"dd/LL/YYYY" }}</p>
+        </div>
+        <div class="summary-item">
+          <h3>Płeć</h3>
+          <p>{{ animalFormSecondGroup.value["sex"] | sex }}</p>
+        </div>
+        <div class="summary-item">
+          <h3>Gatunek</h3>
+          <p>{{ animalFormSecondGroup.value["species"].name }}</p>
+        </div>
+        <div class="summary-item">
+          <h3>Umaszczenie</h3>
+          <p>{{ animalFormSecondGroup.value["morphs"] | morph }}</p>
+        </div>
+        <div class="summary-item">
+          <h3>Zdjęcia</h3>
+          <div class="photoList-summary">
+            @for (photo of photoList.controls; track $index) {
+              <img [src]="photo.value.url" alt="Photo" class="photo-preview"/>
+            }
+          </div>
+        </div>
+        <div class="summary-item">
+          <h3>Na sprzedaż</h3>
+          <p>{{ animalFormFourthGroup.value["isForSale"] ? "Tak" : "Nie" }}</p>
+        </div>
+        @if (isForSale) {
+          <div class="summary-item">
+            <h3>Status rezerwacji</h3>
+            <p>{{ animalFormFourthGroup.value["reservationStatus"] }}</p>
+          </div>
+          <div class="summary-item">
+            <h3>Cena</h3>
+            <p>{{ animalFormFourthGroup.value["price"] }}</p>
+          </div>
+          <div class="summary-item">
+            <h3>Rodzice</h3>
+            <p>{{ animalFormFourthGroup.value["parents"] | parent }}</p>
+          </div>
+        }
+        <div class="buttonFormContainer">
+          <button mat-raised-button color="primary" (click)="submit()">Dodaj</button>
+        </div>
+      </div>
+    </mat-step>
+  </mat-stepper>
+  <div class="buttonContainer">
+    <button mat-raised-button color="primary" [routerLink]="'/admin'">Wróc</button>
+  </div>
+</div>

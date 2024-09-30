@@ -1,0 +1,26 @@
+.nav {
+  position: sticky;
+  display: flex;
+  justify-content: flex-start;
+  gap: 3em;
+  align-items: center;
+  font-size: medium;
+  background-color: ghostwhite;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  height: 7vh;
+  width: 100%;
+  top: 0;
+  box-sizing: border-box;
+  padding-left: 6em;
+  z-index: 999;
+}
+
+.nav p {
+  margin-left: 45em;
+}
+
+nav img{
+  height: 7vh;
+  width: 7vw;
+}
+

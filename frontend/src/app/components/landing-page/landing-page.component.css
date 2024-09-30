@@ -1,0 +1,37 @@
+.landing-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: ghostwhite;
+  width: 95vw;
+  margin: 4em auto;
+
+  border-radius: 1em;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+
+}
+
+
+.description {
+  width: 80%;
+  font-size: large;
+  margin: 2em;
+  text-align: justify;
+}
+
+
+.nav-container{
+  width: 80%;
+  height: 10vh;
+
+}
+
+
+.animals{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, auto);
+  grid-auto-flow: row;
+  gap: 2em;
+  margin-top: 3em;
+}

@@ -38,7 +38,7 @@ public class TropiriaUsernamePasswordAuthenticationProvider implements Authentic
         if (passwordEncoder.matches(password, account.getPassword())) {
             return new UsernamePasswordAuthenticationToken(username, password, account.getAuthorities());
         } else {
-            throw new BadCredentialsException(INVALID_PASSWORD.getMessage());
+            throw new BadCredentialsException(INVALID_PASSWORD.MESSAGE);
         }
     }
 

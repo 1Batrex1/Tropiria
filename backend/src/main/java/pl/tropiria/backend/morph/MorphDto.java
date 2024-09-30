@@ -16,4 +16,17 @@ public class MorphDto {
         this.name = name;
     }
 
+    public static MorphDto toDto(Morph morph) {
+        return MorphDto.builder()
+                .id(morph.getId())
+                .name(morph.getName())
+                .build();
+    }
+
+    public static Morph toEntity(MorphDto morphDto) {
+        return Morph.builder()
+                .id(morphDto.getId())
+                .name(morphDto.getName())
+                .build();
+    }
 }
