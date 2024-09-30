@@ -1,57 +1,37 @@
 .landing-page-container {
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
   align-items: center;
-  background-color: #FFFFFF;
+  background-color: ghostwhite;
+  width: 95vw;
+  margin: 4em auto;
+
+  border-radius: 1em;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+
 }
 
 
 .description {
-  width: 60%;
+  width: 80%;
   font-size: large;
   margin: 2em;
   text-align: justify;
 }
 
 
-.nav-container
-{
-  display: flex;
-  justify-content: space-evenly;
-  width: 60%;
-  padding: 1em;
-  gap: 6em;
+.nav-container{
+  width: 80%;
+  height: 10vh;
 
 }
 
-.nav-container img {
-  width: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-.nav-container a {
-  text-decoration: none;
-  color: black;
-}
-
-.nav-container  p {
-  text-align: center;
-  font-size: 1.75em;
-  margin: 0.25em;
-}
-
-.navbar-button
-{
-  background-color: #61e282;
-
-}
 
 .animals{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, auto);
   grid-auto-flow: row;
-  gap: 10px;
+  gap: 2em;
+  margin-top: 3em;
 }

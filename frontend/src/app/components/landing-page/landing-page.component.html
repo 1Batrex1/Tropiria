@@ -1,33 +1,55 @@
-<div class="landing-page-container">
+<mat-card class="landing-page-container">
 
-  <div class="description">
+  <mat-card class="description">
 
-    <h1>Tropirria to lokalna hodowla gekonów orzesionych</h1>
-    <p>Hodowla gekonów orzęsionych to prawdziwa pasja i zobowiązanie. Nasze gekony są otoczone miłością i troską, co
-      przekłada się na ich szczęście i zdrowie. Dbamy o to, aby miały dobrze zbilansowaną dietę, dostarczając im
-      odpowiednich składników odżywczych. Każdy z naszych podopiecznych mieszka w starannie przygotowanym terrarium,
-      które odzwierciedla ich naturalne środowisko. Te domki zapewniają im nie tylko komfort, ale także przestrzeń do
-      eksploracji i aktywności. Jesteśmy dumni z naszej hodowli i z radością dzielimy się naszą wiedzą i doświadczeniem
-      z innymi miłośnikami tych fascynujących stworzeń.
-    </p>
-  </div>
+    <mat-card-header>
+      <h1>Tropirria to lokalna hodowla gekonów orzesionych</h1>
+      <mat-icon>
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+      </mat-icon>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Hodowla gekonów orzęsionych to prawdziwa pasja i zobowiązanie. Nasze gekony są otoczone miłością i troską, co
+        przekłada się na ich szczęście i zdrowie. Dbamy o to, aby miały dobrze zbilansowaną dietę, dostarczając im
+        odpowiednich składników odżywczych. Każdy z naszych podopiecznych mieszka w starannie przygotowanym
+        terrarium,
+        które odzwierciedla ich naturalne środowisko. Te domki zapewniają im nie tylko komfort, ale także przestrzeń
+        do
+        eksploracji i aktywności. Jesteśmy dumni z naszej hodowli i z radością dzielimy się naszą wiedzą i
+        doświadczeniem
+        z innymi miłośnikami tych fascynujących stworzeń.
+      </p>
+    </mat-card-content>
+  </mat-card>
 
-  <div class="nav-container">
-    <a class="navbar-button" routerLink="/animals">
-      <img src="assets/placeholderbutton.png" alt="dostępne zwierzęta">
-      <p>Dostępne zwierzęta</p>
-    </a>
-    <a class="navbar-button" routerLink="/order-terrarium">
-      <img src="assets/placeholderbutton.png" alt="dostępne zwierzęta">
-      <p>Zamów terrarium</p>
-    </a>
-    <a class="navbar-button" routerLink="/gallery">
-      <img src="assets/placeholderbutton.png" alt="dostępne zwierzęta">
-      <p>Galeria</p>
-    </a>
-  </div>
+  <mat-grid-list class="nav-container" cols="3" gutterSize="3em">
+
+    <mat-grid-tile>
+      <app-nav-item mainText="Przejrzyj naszą ofertę i znajdź swojego nowego pupila"
+                    buttonText="Zobacz ofertę"
+                    imagePath="assets/placeholderbutton.png"
+                    routerLink="/animals"
+      ></app-nav-item>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <app-nav-item mainText="Zamów terrarium dla swojego gekona"
+                    buttonText="Zamów terrarium"
+                    imagePath="assets/placeholderbutton.png"
+                    routerLink="/order-terrarium"
+      ></app-nav-item>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <app-nav-item mainText="Zobacz galerię naszych podopiecznych"
+                    buttonText="Zobacz galerię"
+                    imagePath="assets/placeholderbutton.png"
+                    routerLink="/gallery"
+      ></app-nav-item>
+    </mat-grid-tile>
+  </mat-grid-list>
+
   <div class="animals">
     <app-landing-page-animal *ngFor="let animal of animalsForSale" [animal]="animal"></app-landing-page-animal>
   </div>
-</div>
+</mat-card>
 
