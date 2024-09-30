@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {PhotoService} from "../../services/photo.service";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
-import {NgIf, NgOptimizedImage} from "@angular/common";
+import {NgIf, NgOptimizedImage, NgStyle} from "@angular/common";
 import {environment} from "../../../constants/environment";
 
 @Component({
@@ -9,7 +9,8 @@ import {environment} from "../../../constants/environment";
   standalone: true,
   imports: [
     NgIf,
-    NgOptimizedImage
+    NgOptimizedImage,
+    NgStyle
   ],
   templateUrl: './photo.component.html',
   styleUrl: './photo.component.css'
@@ -18,9 +19,9 @@ export class PhotoComponent {
 
   @Input() photoName?: string;
 
-  @Input() width: number = 200;
+  @Input() width: string = '100%';
 
-  @Input() height: number = 200;
+  height: string  = 'auto';
 
   photoUrl?: SafeUrl ;
 
@@ -34,6 +35,6 @@ export class PhotoComponent {
   }
 
   loadPhoto(photoName: string) {
-      this.photoUrl = environment.path.photos + "/" + photoName;
+      this.photoUrl = environment.path.photo + "/" + photoName;
   }
 }
