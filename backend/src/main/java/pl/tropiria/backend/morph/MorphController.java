@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import static pl.tropiria.backend.config.constants.EndpointConstant.MORPH;
@@ -22,9 +24,12 @@ public class MorphController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveMorphs(@RequestParam("morph") String morphName) {
-        morphService.saveMorph(new MorphDto(morphName));
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> saveMorphs(@RequestParam("morph") String morphName) throws URISyntaxException {
+        MorphDto morphDto = morphService.saveMorph(new MorphDto(morphName));
+        return ResponseEntity.created(
+                        new URI(MORPH + "/" + morphDto.getId()))
+                .body(morphDto);
+
     }
 
     @PutMapping("/{id}")

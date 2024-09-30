@@ -17,21 +17,16 @@ public class MorphService {
 
     public List<MorphDto> getMorphs() {
 
-        return morphRepository.findAllByOrderByIdAsc().stream()
-                .map(morph -> MorphDto.builder()
-                        .id(morph.getId())
-                        .name(morph.getName())
-                        .build())
-                .toList();
+        return morphRepository.findAllByOrderByIdAsc().stream().map(MorphDto::toDto).toList();
     }
 
-    public void saveMorph(MorphDto morphDto) {
+    public MorphDto saveMorph(MorphDto morphDto) {
         if (isMorphExists(morphDto.getName())) {
             throw new IllegalFormatCodePointException(MORPH_ALREADY_EXISTS.CODE);
         }
-        morphRepository.save(Morph.builder()
-                .name(morphDto.getName())
-                .build());
+        Morph morph = morphRepository.save(MorphDto.toEntity(morphDto));
+
+        return MorphDto.toDto(morph);
     }
 
     public MorphDto updateMorph(Long id, MorphDto morphDto) {
@@ -39,10 +34,7 @@ public class MorphService {
                 .orElseThrow(() -> new IllegalFormatCodePointException(MORPH_NOT_FOUND.CODE));
         morph.setName(morphDto.getName());
         morphRepository.save(morph);
-        return MorphDto.builder()
-                .id(morph.getId())
-                .name(morph.getName())
-                .build();
+        return MorphDto.toDto(morph);
     }
 
     public void deleteMorph(Long id) {
