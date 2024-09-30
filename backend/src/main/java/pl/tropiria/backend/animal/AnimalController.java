@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.CacheControl;
 import org.springframework.web.bind.annotation.*;
@@ -49,9 +48,9 @@ public class AnimalController {
     }
 
     @PostMapping
-    public ResponseEntity<AnimalDto> saveAnimal(@RequestPart("animal") String animalJson, @RequestPart("photos") MultipartFile[] photos) throws JsonProcessingException {
+    public ResponseEntity<AnimalDto> saveAnimal(@RequestPart("animal") String animalJson, @RequestPart("photoList") MultipartFile[] photoList) throws JsonProcessingException {
 
-        animalService.saveAnimal(animalJson, photos);
+        animalService.saveAnimal(animalJson, photoList);
         return ResponseEntity.ok().build();
     }
 
