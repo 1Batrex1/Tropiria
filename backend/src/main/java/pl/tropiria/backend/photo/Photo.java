@@ -1,4 +1,4 @@
-package pl.tropiria.backend.photos;
+package pl.tropiria.backend.photo;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -9,10 +9,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "photos")
+@Table(name = "photo")
 @Data
 @Builder
-public class Photos {
+public class Photo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

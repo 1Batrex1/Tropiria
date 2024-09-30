@@ -14,7 +14,7 @@ public class EndpointConstant {
 
     public static final String MORPH = "/morph";
 
-    public static final String PHOTOS = "/photos";
+    public static final String PHOTO = "/photo";
 
     public static final String ANIMALS = "/animals";
 
