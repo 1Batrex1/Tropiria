@@ -2,6 +2,7 @@ package pl.tropiria.backend.animal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,15 +12,15 @@ import pl.tropiria.backend.config.constants.SexConstant;
 import pl.tropiria.backend.morph.Morph;
 import pl.tropiria.backend.morph.MorphService;
 import pl.tropiria.backend.config.constants.ReservationConstant;
-import pl.tropiria.backend.photos.Photos;
-import pl.tropiria.backend.photos.PhotosDto;
-import pl.tropiria.backend.photos.PhotosService;
+import pl.tropiria.backend.photo.Photo;
+import pl.tropiria.backend.photo.PhotoDto;
+import pl.tropiria.backend.photo.PhotoService;
 import pl.tropiria.backend.species.SpeciesService;
 
 import java.util.*;
 
+import static java.util.stream.Collectors.toList;
 import static pl.tropiria.backend.config.constants.ErrorsConstant.*;
-import static pl.tropiria.backend.config.constants.PhotosConstant.*;
 
 
 @Service
@@ -27,51 +28,40 @@ import static pl.tropiria.backend.config.constants.PhotosConstant.*;
 public class AnimalService {
 
     private final AnimalRepository animalRepository;
-    private final PhotosService photosService;
+    private final PhotoService photoService;
     private final SpeciesService speciesService;
     private final MorphService morphService;
 
-    public Page<Animal> getAnimals(Pageable pageable) {
+    public Page<AnimalDto> getAnimals(Pageable pageable) {
         return animalRepository
-                .findAll(pageable);
+                .findAll(pageable)
+                .map(AnimalDto::toDto);
     }
 
     public AnimalDto findById(long id) {
         if (isAnimalExists(id)) {
             Animal animal = animalRepository.findById(id);
-            return AnimalDto.builder().
-                    id(animal.getId())
-                    .name(animal.getName())
-                    .description(animal.getDescription())
-                    .sex(animal.getSex())
-                    .dateOfBirth(animal.getDateOfBirth())
-                    .species(animal.getSpecies())
-                    .morphs(animal.getMorphs())
-                    .photos(animal.getPhotos())
-                    .animalForSale(animal.getAnimalForSale())
-                    .build();
+            return AnimalDto.toDto(animal);
         }
         throw new IllegalFormatCodePointException(ANIMAL_NOT_FOUND.CODE);
     }
 
-    public void saveAnimal(String animalJson, MultipartFile[] photos) {
+    @Transactional
+    public AnimalDto saveAnimal(String animalJson, MultipartFile[] photoMultipartList) {
 
-        checkPhotosLimit(photos);
+        photoService.checkPhotosLimit(photoMultipartList);
 
-        List<Photos> photosList = photosService.savePhoto(photos);
+        List<PhotoDto> photoDtoList = photoService.saveMultiplePhotoInDataBase(photoMultipartList);
+        List<Photo> photoList = photoDtoList.stream()
+                .map(PhotoDto::toEntity)
+                .collect(toList());
         AnimalDto animalDto = mapJsonToDto(animalJson);
-        animalDto.setPhotos(photosList);
+        animalDto.setPhotoList(photoList);
+
         checkAnimalDto(animalDto);
-        animalRepository.save(Animal.builder()
-                .name(animalDto.getName())
-                .description(animalDto.getDescription())
-                .sex(animalDto.getSex())
-                .dateOfBirth(animalDto.getDateOfBirth())
-                .species(animalDto.getSpecies())
-                .morphs(animalDto.getMorphs())
-                .photos(animalDto.getPhotos())
-                .animalForSale(animalDto.getAnimalForSale())
-                .build());
+        Animal animal = animalRepository.save(AnimalDto.toEntity(animalDto));
+
+        return AnimalDto.toDto(animal);
 
     }
 
@@ -85,7 +75,7 @@ public class AnimalService {
 
     private void checkAnimalDto(AnimalDto animalDto) {
         if (animalDto.getAnimalForSale() != null) {
-            if (!validReservationStatus(animalDto.getAnimalForSale().getReservationStatus())) {
+            if (validReservationStatus(animalDto.getAnimalForSale().getReservationStatus())) {
                 throw new IllegalFormatCodePointException(INVALID_RESERVATION_STATUS.CODE);
             }
         }
@@ -127,6 +117,8 @@ public class AnimalService {
                     });
 
                 }
+                List<Photo> photo = a.getPhotoList();
+                photo.forEach(p -> photoService.deletePhoto(PhotoDto.toDto(p)));
                 animalRepository.delete(a);
 
 
@@ -134,12 +126,29 @@ public class AnimalService {
         }
     }
 
-    public Page<Animal> getAnimalsForSale(Pageable pagable) {
-        return animalRepository.findAllAnimalsForSale(pagable);
+    public AnimalDto updateReservationStatus(long id, String status) {
+        if (isAnimalExists(id) && validReservationStatus(status)) {
+            Animal animal = animalRepository.findById(id);
+            if (animal.getAnimalForSale() != null) {
+                animal.getAnimalForSale().setReservationStatus(status);
+                animal = animalRepository.save(animal);
+                return AnimalDto.toDto(animal);
+            } else {
+                throw new IllegalFormatCodePointException(ANIMAL_NOT_FOR_SALE.CODE);
+            }
+        } else {
+            throw new IllegalFormatCodePointException(ANIMAL_NOT_FOUND.CODE);
+        }
     }
 
-    public List<Animal> getParents() {
-        return animalRepository.findAllParents();
+    public Page<AnimalDto> getAnimalsForSale(Pageable pagable) {
+        return animalRepository.findAllAnimalsForSale(pagable)
+                .map(AnimalDto::toDto);
+
+    }
+
+    public List<AnimalDto> getParents() {
+        return animalRepository.findAllParents().stream().map(AnimalDto::toDto).toList();
     }
 
     private boolean isAnimalExists(long id) {
@@ -148,18 +157,14 @@ public class AnimalService {
 
 
     private boolean validReservationStatus(String reservationStatus) {
-        return reservationStatus.equals(ReservationConstant.RESERVED)
-                || reservationStatus.equals(ReservationConstant.FOR_SALE)
-                || reservationStatus.equals(ReservationConstant.SOLD);
+        return !reservationStatus.equals(ReservationConstant.RESERVED)
+                && !reservationStatus.equals(ReservationConstant.FOR_SALE)
+                && !reservationStatus.equals(ReservationConstant.SOLD);
     }
 
     private boolean validSex(int sex) {
         return sex == SexConstant.UNKNOWN || sex == SexConstant.MALE || sex == SexConstant.FEMALE;
     }
 
-    private void checkPhotosLimit(MultipartFile[] photosList) {
-        if (photosList.length > PHOTO_MAX_LIMIT || photosList.length < PHOTO_MIN_LIMIT) {
-            throw new IllegalFormatCodePointException(PHOTO_LIMIT_EXCEEDED.CODE);
-        }
-    }
+
 }
