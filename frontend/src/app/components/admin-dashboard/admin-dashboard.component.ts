@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Animal} from "../../entities/animal";
 import {AnimalService} from "../../services/animal.service";
 import {MessageHandlerService} from "../../services/message-handler.service";
@@ -14,6 +14,8 @@ import {
 import {NgForOf, NgIf} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import {MatButton} from "@angular/material/button";
+import {reservationStatus} from "../../../constants/reservationConstant";
+import {of} from "rxjs";
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -39,18 +41,18 @@ import {MatButton} from "@angular/material/button";
 })
 export class AdminDashboardComponent {
 
-  displayedColumns: string[] = ['id', 'name', 'species','morph','forSale','reservationStatus','price','actions'];
+  displayedColumns: string[] = ['id', 'name', 'species', 'morph', 'forSale', 'reservationStatus', 'price', 'actions'];
 
 
-  animals :Animal[] = [];
+  animals: Animal[] = [];
 
-  number : number = 0;
+  number: number = 0;
 
-  size : number = 20;
+  size: number = 20;
 
-  totalPages : number = 0;
+  totalPages: number = 0;
 
-  totalElements : number = 0;
+  totalElements: number = 0;
 
   constructor(private animalService: AnimalService, private messageHandler: MessageHandlerService) {
   }
@@ -60,7 +62,7 @@ export class AdminDashboardComponent {
   }
 
   getAnimals() {
-    this.animalService.getAnimals(this.number,this.size).subscribe(
+    this.animalService.getAnimals(this.number, this.size).subscribe(
       {
         next: animals => {
           this.animals = animals.content;
@@ -83,6 +85,24 @@ export class AdminDashboardComponent {
     )
   }
 
+  updateReservationStatus(id: number, status: string) {
+
+    let formData = new FormData();
+    formData.append('status', status);
+
+    this.animalService.updateReservationStatus(id, formData).subscribe(
+      {
+        next: () => {
+          this.getAnimals();
+          this.messageHandler.successInfo('Reservation status updated');
+        },
+        error: e => this.messageHandler.handleHttpError(e)
+      }
+    )
+  }
+
+  protected readonly reservationStatus = reservationStatus;
+  protected readonly of = of;
 }
 
 
