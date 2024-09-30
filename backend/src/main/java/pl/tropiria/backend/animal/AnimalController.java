@@ -20,23 +20,18 @@ import static pl.tropiria.backend.config.constants.EndpointConstant.ANIMALS;
 @RequestMapping(ANIMALS)
 public class AnimalController {
 
-    private static final String SUCCESSFUL_SAVE_ANIMAL = "animal saved";
-
-    private static final String SUCCESSFUL_DELETE_ANIMAL = "animal deleted";
-
-
 
     private final AnimalService animalService;
 
     @GetMapping
-    public ResponseEntity<Page<Animal>> getAllAnimals(Pageable pageable) {
+    public ResponseEntity<Page<AnimalDto>> getAllAnimals(Pageable pageable) {
         return ResponseEntity
                 .ok()
                 .body(animalService.getAnimals(pageable));
     }
 
     @GetMapping("/for-sale")
-    public ResponseEntity<Page<Animal>> getAnimalsForSale(Pageable pageable) {
+    public ResponseEntity<Page<AnimalDto>> getAnimalsForSale(Pageable pageable) {
         return ResponseEntity
                 .ok()
                 .cacheControl(CacheControl.maxAge(8, TimeUnit.HOURS))
@@ -44,7 +39,7 @@ public class AnimalController {
     }
 
     @GetMapping("/parents")
-    public ResponseEntity<List<Animal>> getParents() {
+    public ResponseEntity<List<AnimalDto>> getParents() {
         return ResponseEntity.ok(animalService.getParents());
     }
 
@@ -54,10 +49,10 @@ public class AnimalController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveAnimal(@RequestPart("animal") String animalJson, @RequestPart("photos") MultipartFile[] photos) throws JsonProcessingException {
+    public ResponseEntity<AnimalDto> saveAnimal(@RequestPart("animal") String animalJson, @RequestPart("photos") MultipartFile[] photos) throws JsonProcessingException {
 
         animalService.saveAnimal(animalJson, photos);
-        return ResponseEntity.status(HttpStatus.CREATED).body(SUCCESSFUL_SAVE_ANIMAL);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
@@ -66,5 +61,9 @@ public class AnimalController {
         return ResponseEntity.ok().build();
     }
 
-
+    @PutMapping("/{id}")
+    public ResponseEntity<AnimalDto> updateReservationStatus(@PathVariable long id,@RequestPart("status") String status) {
+        AnimalDto animalDto= animalService.updateReservationStatus(id, status);
+        return ResponseEntity.ok().body(animalDto);
+    }
 }
