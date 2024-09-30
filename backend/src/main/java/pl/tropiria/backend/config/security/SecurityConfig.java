@@ -82,7 +82,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, SPECIES + "/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, ANIMALS + "/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, MORPH + "/**").permitAll()
-                                .requestMatchers(HttpMethod.GET, PHOTOS + "/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, PHOTO + "/**").permitAll()
                                 .requestMatchers(LOGIN).permitAll()
                                 .requestMatchers(CSRF).permitAll()
                                 .anyRequest().hasRole(ADMIN_ROLE)
