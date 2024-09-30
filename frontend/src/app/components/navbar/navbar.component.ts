@@ -4,6 +4,8 @@ import {NavbarButtonComponent} from "./navbar-button/navbar-button.component";
 import {NgOptimizedImage} from "@angular/common";
 import {PhotoComponent} from "../photo/photo.component";
 import {BrowserStorageService} from "../../services/browser-storage.service";
+import {MatButton} from "@angular/material/button";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: 'app-navbar',
@@ -12,7 +14,9 @@ import {BrowserStorageService} from "../../services/browser-storage.service";
     RouterLink,
     NavbarButtonComponent,
     NgOptimizedImage,
-    PhotoComponent
+    PhotoComponent,
+    MatButton,
+    MatIcon
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'

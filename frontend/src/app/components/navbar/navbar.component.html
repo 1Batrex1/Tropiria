@@ -1,12 +1,23 @@
 <nav class="nav">
-  <app-navbar-button text="Home" routerLink="/"></app-navbar-button>
-  <app-navbar-button text="Terraria" routerLink="/order-terrarium"></app-navbar-button>
-  <app-navbar-button text="Galeria" routerLink="/gallery"></app-navbar-button>
-  <app-navbar-button text="Kontakt" routerLink="/contact"></app-navbar-button>
-  <app-navbar-button text="Regulamin" routerLink="/statute"></app-navbar-button>
+  <button mat-button routerLink="/">Home
+    <mat-icon fontIcon="home"></mat-icon>
+  </button>
+  <button mat-button routerLink="/order-terrarium">Terraria
+    <mat-icon fontIcon="dashboard"></mat-icon>
+  </button>
+  <button mat-button routerLink="/gallery">Galeria
+    <mat-icon fontIcon="photo library icon"></mat-icon>
+  </button>
+  <button mat-button routerLink="/contact">Kontakt
+    <mat-icon fontIcon="contact_mail"></mat-icon>
+  </button>
+  <button mat-button routerLink="/statute">Regulamin
+    <mat-icon fontIcon="assignment"></mat-icon>
+  </button>
 
-  <img src="assets/logo.png" alt="logo" >
   <p>Gekony Tropirria</p>
+  <img src="assets/logo.svg" alt="logo">
+
 </nav>
 
 
