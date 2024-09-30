@@ -4,6 +4,6 @@ export class AnimalForSale {
   constructor(
     public price: number,
     public reservationStatus: string,
-    public parents: Animal[]
+    public parents?: Animal[]
   ){}
 }
