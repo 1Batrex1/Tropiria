@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Animal} from "../entities/animal";
 import {Observable} from "rxjs";
 import {environment} from "../../constants/environment";
 import {AuthService} from "./auth.service";
 import {BrowserStorageService} from "./browser-storage.service";
 import {response} from "express";
+import {Form} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +29,17 @@ export class AnimalService {
     return this.http.get<getAnimals>(environment.path.animals + '?page=' + number + '&size=' + size);
   }
 
-  deleteAnimal(id: number): Observable<any>  {
+  deleteAnimal(id: number): Observable<any> {
     return this.http.delete(environment.path.animals + '/' + id);
+  }
+
+  addAnimal(formData: FormData): Observable<any> {
+    return this.http.post(environment.path.animals, formData);
+  }
+
+  updateReservationStatus(id: number, formData: FormData): Observable<any> {
+    return this.http.put(environment.path.animals + "/" + id, formData);
+
   }
 }
 
