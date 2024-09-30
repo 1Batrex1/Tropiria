@@ -46,6 +46,9 @@ public class ExceptionController extends ResponseEntityExceptionHandler  {
         if (e.getCodePoint() == ANIMAL_NOT_FOUND.CODE) {
             return ResponseEntity.internalServerError().body(ANIMAL_NOT_FOUND.MESSAGE);
         }
+        if (e.getCodePoint() == ANIMAL_NOT_FOR_SALE.CODE) {
+            return ResponseEntity.internalServerError().body(ANIMAL_NOT_FOR_SALE.MESSAGE);
+        }
         if (e.getCodePoint() == MORPH_NOT_FOUND.CODE) {
             return ResponseEntity.internalServerError().body(MORPH_NOT_FOUND.MESSAGE);
         }
