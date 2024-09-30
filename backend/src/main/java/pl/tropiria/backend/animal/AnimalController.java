@@ -48,7 +48,7 @@ public class AnimalController {
     }
 
     @PostMapping
-    public ResponseEntity<AnimalDto> saveAnimal(@RequestPart("animal") String animalJson, @RequestPart("photoList") MultipartFile[] photoList) throws JsonProcessingException {
+    public ResponseEntity<AnimalDto> saveAnimal(@RequestPart("animal") String animalJson, @RequestPart("photoList") MultipartFile[] photoList) {
 
         animalService.saveAnimal(animalJson, photoList);
         return ResponseEntity.ok().build();
