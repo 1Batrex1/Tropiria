@@ -5,7 +5,6 @@ import {MessageHandlerService} from "../../services/message-handler.service";
 import {NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {PhotoComponent} from "../photo/photo.component";
 import {RouterLink} from "@angular/router";
-import {LandingPageAnimalComponent} from "./landing-page-animal/landing-page-animal.component";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardImage} from "@angular/material/card";
@@ -21,7 +20,6 @@ import {MatIcon} from "@angular/material/icon";
     NgOptimizedImage,
     PhotoComponent,
     RouterLink,
-    LandingPageAnimalComponent,
     MatSlideToggle,
     NgIf,
     MatGridList,
@@ -42,11 +40,13 @@ export class LandingPageComponent {
 
   animalsForSale: Animal[] = [];
 
+  animalForLandingPageSize: number = 3;
+
   constructor(private animalService: AnimalService, private messageHandler: MessageHandlerService) {
   }
 
   ngOnInit() {
-    this.animalService.getAnimalsForSale().subscribe(
+    this.animalService.getAnimalsForSale(this.animalForLandingPageSize).subscribe(
       {
         next: animals => {
           this.animalsForSale = animals.content
