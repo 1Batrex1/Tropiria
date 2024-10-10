@@ -3,6 +3,8 @@ package pl.tropiria.backend.photo;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +19,7 @@ import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 import static pl.tropiria.backend.config.constants.ErrorsConstant.*;
-import static pl.tropiria.backend.config.constants.PhotosConstant.*;
+import static pl.tropiria.backend.config.constants.PhotoConstant.*;
 import static pl.tropiria.backend.utilites.SHAEncoder.encode;
 
 @Service
@@ -26,12 +28,10 @@ public class PhotoService {
 
     private final PhotoRepository photoRepository;
 
-    private static final Path directoryPath = Paths.get(PHOTOS_DIR).toAbsolutePath().normalize();
+    private static final Path directoryPath = Paths.get(PHOTO_DIR).toAbsolutePath().normalize();
 
-    public List<PhotoDto> getAllPhoto() {
-        return photoRepository.findAll().stream()
-                .map(PhotoDto::toDto)
-                .toList();
+    public Page<PhotoDto> getAllPhoto(Pageable pageable) {
+        return photoRepository.findAll(pageable).map(PhotoDto::toDto);
     }
 
 
@@ -114,7 +114,7 @@ public class PhotoService {
 
     private void deletePhotoFromDisk(PhotoDto photoDto) {
         try {
-            Files.delete(Paths.get(PHOTOS_DIR + File.separator + photoDto.getPhotoName()));
+            Files.delete(Paths.get(PHOTO_DIR + File.separator + photoDto.getPhotoName()));
         } catch (IOException e) {
             throw new IllegalFormatCodePointException(FAIL_TO_DELETE_PHOTO.CODE);
         }
