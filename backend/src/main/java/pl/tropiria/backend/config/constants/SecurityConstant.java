@@ -12,7 +12,7 @@ public class SecurityConstant {
 
     public static final String JWT_HEADER = "Authorization";
 
-    public static final String JWT_SECRET = "";
+    public static String JWT_SECRET;
 
     public static final String JWT_NAME = "JWT_TOKEN";
 
@@ -23,4 +23,8 @@ public class SecurityConstant {
     public static final String AUTHORITIES = "authorities";
 
     public static final long EXPIRATION_TIME = 30000000;
+
+    public static void setJwtSecret(String jwtSecret) {
+        JWT_SECRET = jwtSecret;
+    }
 }
