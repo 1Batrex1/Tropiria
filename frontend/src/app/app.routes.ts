@@ -5,6 +5,7 @@ import {AdminDashboardComponent} from "./components/admin-dashboard/admin-dashbo
 import {RouteGuard} from "./security/route-guard";
 import {LoginComponent} from "./components/login/login.component";
 import {AnimalFormComponent} from "./components/admin-dashboard/animal-form/animal-form.component";
+import {GalleryComponent} from "./components/gallery/gallery.component";
 
 export const routes: Routes = [
   {
@@ -32,7 +33,12 @@ export const routes: Routes = [
     component: LoginComponent
   },
   {
+    path: "gallery",
+    component: GalleryComponent
+  },
+  {
     path: "**",
     redirectTo: ''
   }
+
 ];
