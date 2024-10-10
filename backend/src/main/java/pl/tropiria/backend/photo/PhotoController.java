@@ -2,6 +2,8 @@ package pl.tropiria.backend.photo;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +26,8 @@ public class PhotoController {
     private final PhotoService photoService;
 
     @GetMapping
-    public ResponseEntity<List<PhotoDto>> getAllPhoto() {
-        return ResponseEntity.ok(photoService.getAllPhoto());
+    public ResponseEntity<Page<PhotoDto>> getAllPhoto(Pageable pageable) {
+        return ResponseEntity.ok(photoService.getAllPhoto(pageable));
     }
 
     @PostMapping
