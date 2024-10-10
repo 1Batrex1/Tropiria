@@ -141,8 +141,8 @@ public class AnimalService {
         }
     }
 
-    public Page<AnimalDto> getAnimalsForSale(Pageable pagable) {
-        return animalRepository.findAllAnimalsForSale(pagable)
+    public Page<AnimalDto> getAnimalsForSale(Pageable pageable) {
+        return animalRepository.findAllAnimalsForSale(pageable)
                 .map(AnimalDto::toDto);
 
     }
@@ -157,9 +157,7 @@ public class AnimalService {
 
 
     private boolean validReservationStatus(String reservationStatus) {
-        return !reservationStatus.equals(ReservationConstant.RESERVED)
-                && !reservationStatus.equals(ReservationConstant.FOR_SALE)
-                && !reservationStatus.equals(ReservationConstant.SOLD);
+        return reservationStatus.equals(ReservationConstant.FOR_SALE) || reservationStatus.equals(ReservationConstant.RESERVED) || reservationStatus.equals(ReservationConstant.SOLD);
     }
 
     private boolean validSex(int sex) {

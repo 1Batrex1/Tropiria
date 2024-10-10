@@ -8,6 +8,7 @@ import org.springframework.http.CacheControl;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URI;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -49,8 +50,8 @@ public class AnimalController {
     @PostMapping
     public ResponseEntity<AnimalDto> saveAnimal(@RequestPart("animal") String animalJson, @RequestPart("photoList") MultipartFile[] photoList) {
 
-        animalService.saveAnimal(animalJson, photoList);
-        return ResponseEntity.ok().build();
+        AnimalDto animalDto= animalService.saveAnimal(animalJson, photoList);
+        return ResponseEntity.created(URI.create(ANIMALS + "/" + animalDto.getId() )).body(animalDto);
     }
 
     @DeleteMapping("/{id}")
