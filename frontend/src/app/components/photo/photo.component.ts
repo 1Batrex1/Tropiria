@@ -21,7 +21,7 @@ export class PhotoComponent {
 
   @Input() width: string = '100%';
 
-  height: string  = 'auto';
+  @Input() height: string  = 'auto';
 
   photoUrl?: SafeUrl ;
 
