@@ -13,9 +13,9 @@ spring:
 
   # Database
   datasource:
-    url: jdbc:postgresql://localhost:5432/Tropiria
-    username: postgres
-    password: Q@werty
+    url: <url>
+    username: <username>
+    password: <password>
   data:
     jpa:
       repositories:
