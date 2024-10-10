@@ -32,3 +32,5 @@ logging:
     org:
       springframework: debug
 
+jwt:
+  secret: <secret>

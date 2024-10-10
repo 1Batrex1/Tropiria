@@ -3,6 +3,7 @@ package pl.tropiria.backend.config.security;
 import lombok.AllArgsConstructor;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -26,6 +27,8 @@ public class TropiriaUserDetails implements UserDetailsService {
     private final AccountRepository accountRepository;
 
     private static final Log logger = LogFactory.getLog(TropiriaUserDetails.class);
+
+
 
 
     @Override
