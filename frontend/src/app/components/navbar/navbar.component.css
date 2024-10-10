@@ -10,17 +10,18 @@
   height: 7vh;
   width: 100%;
   top: 0;
-  box-sizing: border-box;
   padding-left: 6em;
+  box-sizing: border-box;
   z-index: 999;
 }
 
 .nav p {
-  margin-left: 45em;
+  margin-left: 38em;
 }
 
 nav img{
   height: 7vh;
   width: 7vw;
 }
+
 
