@@ -21,8 +21,8 @@ export class AnimalService {
     return this.http.get<Animal[]>(environment.path.animals + '/parents');
   }
 
-  getAnimalsForSale(): Observable<getAnimalsForSale> {
-    return this.http.get<getAnimalsForSale>(environment.path.animals + '/for-sale?size=4');
+  getAnimalsForSale(size: number): Observable<getAnimalsForSale> {
+    return this.http.get<getAnimalsForSale>(environment.path.animals + '/for-sale?size=' + size);
   }
 
   getAnimals(number: number, size: number): Observable<getAnimals> {
